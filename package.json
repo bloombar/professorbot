@@ -1,10 +1,12 @@
 {
-  "name": "@ibm-watson/customer-engagement-bot",
-  "description": "A simple Node.js based web app which shows how to use the Assistant API to recognize user intents.",
-  "version": "0.2.1",
+  "name": "Professorbot",
+  "description": "The next best thing to the real thing.",
+  "version": "0.0.1",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "start-dev": "nodemon ./server.js",
+    "verify-slack": "./node_modules/.bin/slack-verify  --path=/api/slack/action-endpoint --port=3000 --secret ",
     "test-unit": "mocha ./test/unit --exit",
     "test-casper": "casperjs test ./test/test.webui.js",
     "test-casper-runner": "NODE_ENV=test node casper-runner.js",
@@ -14,14 +16,17 @@
     "autofix": "eslint --fix .",
     "validate": "npm ls"
   },
-  "license": "Apache-2.0",
+  "license": "GPL3",
   "dependencies": {
+    "@slack/events-api": "^2.3.0",
+    "@slack/web-api": "^5.2.0",
     "basic-auth-connect": "^1.0.0",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "cloudant": "^1.10.0-NOTICE",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "googleapis": "^39.2.0",
     "nano": "^6.4.4",
     "uuid": "^3.3.2",
     "vcap_services": "^0.4.0",
@@ -42,20 +47,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/watson-developer-cloud/customer-engagement-bot.git"
-  },
-  "contributors": [
-    {
-      "name": "Vibha Sinha",
-      "email": "vibha.sinha@us.ibm.com"
-    },
-    {
-      "name": "April Webster",
-      "email": "awebster@us.ibm.com"
-    }
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
+    "url": "git+https://github.com/bloombar/professsorbot.git"
   }
 }

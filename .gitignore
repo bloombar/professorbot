@@ -5,3 +5,10 @@ temp/
 coverage
 .env
 npm-debug.log
+
+# Google Sheets credentials
+credentials.json
+token.json
+
+# Emacs backups
+*~

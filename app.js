@@ -1,34 +1,32 @@
-/**
- * Copyright 2015 IBM Corp. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-
 'use strict';
 
-var express = require('express'); // app server
-var bodyParser = require('body-parser'); // parser for post requests
-var AssistantV1 = require('watson-developer-cloud/assistant/v1');
-var ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+require('dotenv').config({silent: true});
 
-var toneDetection = require('./addons/tone_detection.js'); // required for tone
-                                                            // detection
-var maintainToneHistory = false;
+const express = require('express'); // app server
+const bodyParser = require('body-parser'); // parser for post requests
+const port = process.env.PORT || 3000;
 
-// The following requires are needed for logging purposes
-var uuid = require('uuid');
-var vcapServices = require('vcap_services');
-var basicAuth = require('basic-auth-connect');
+// IBM Watson integration
+const AssistantV1 = require('watson-developer-cloud/assistant/v1');
+const ToneAnalyzerV3 = require('watson-developer-cloud/tone-analyzer/v3');
+const toneDetection = require('./addons/tone_detection.js'); // required for tone detection
+const maintainToneHistory = false;
+
+// for logging
+const uuid = require('uuid');
+const vcapServices = require('vcap_services');
+const basicAuth = require('basic-auth-connect');
+
+// Slack integration
+const { WebClient, ErrorCode } = require('@slack/web-api');
+const { createEventAdapter } = require('@slack/events-api');
+const slackEvents = createEventAdapter(process.env.SLACK_SIGNING_SECRET);
+const slackWebClient = new WebClient(process.env.SLACK_TOKEN);
+
+// Google Sheets integration
+const fs = require('fs');
+const {authorize, getNewToken, listTeams, googleAPIRun, getCellValue} = require('./google_sheets_funcs');
+const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly'];
 
 // The app owner may optionally configure a cloudand db to track user input.
 // This cloudand db is not required, the app will operate without it.
@@ -40,13 +38,97 @@ if (cloudantCredentials) {
   cloudantUrl = cloudantCredentials.url;
 }
 cloudantUrl = cloudantUrl || process.env.CLOUDANT_URL; // || '<cloudant_url>';
+
+// respond to incoming slack messages
+let incomingSlackMessageEvent = async (e) => {
+  // extract salient details
+  const userId = e.user;
+  const channelId = e.channel;
+  const message = e.text;
+
+  // respond to the messages from users where userId is defined
+  // (otherwise we get a feedback loop from the bot's own messages)
+  if (userId) {
+    const currentTime = new Date().toTimeString();
+    
+    // get watson response
+    let payload = {
+      workspace_id: process.env.WORKSPACE_ID,
+      context: {},
+      input: {
+        "text": message
+      }
+    };
+
+    // get watson's response
+    assistant.message(payload, async (err, watsonResponse) => {
+      let responseMessage = watsonResponse.output.text[0];
+      responseMessage = (responseMessage) ? responseMessage : ''; // remove undefined
+
+      // debugging: output watson's response data
+      console.log('WATSON RESPONSE: ' + JSON.stringify(watsonResponse, null, 2));
+
+      // add any indicator of confusion, if confidence is low
+      if (watsonResponse.intents.length == 0 || (watsonResponse.intents && watsonResponse.intents[0].confidence <= 0.5)) {
+        responseMessage = "I'm not sure I understand... " + responseMessage;
+      } // end if intent
+
+      // do we need to get a grade from Google Sheets?
+      if (watsonResponse.intents.length > 0 && (watsonResponse.intents && watsonResponse.intents[0].intent == 'get_grade')) {
+
+        // get data from Google sheets
+        googleAPIRun((oAuth2Client) => {
+          // get a particular row and column from the spreadsheet
+          getCellValue(oAuth2Client, 8, 2);
+        });
+
+      } // if intent is get_grade
+
+      // send message if there is one
+      if (responseMessage.trim() != '') {
+        // add the recipient's username to response
+        responseMessage = '<@' + userId + '> - ' + responseMessage
+
+        // send watson's response to Slack conversation
+        let payload = {
+          channel: channelId,
+          text: responseMessage,
+        };
+
+        //console.log('SLACK MESSAGE: ' + JSON.stringify(payload, null, 2));
+
+        // post message to Slack
+        const result = await slackWebClient.chat.postMessage(payload);
+
+
+      }
+
+    }); // assistant.message
+    
+  } // if userid
+
+  // debugging
+  // console.log(`Received a message event: user ${userId} in channel ${channelId} says '${message}'.`);
+
+}; // incomingSlackMessageEvent
+
+// instantiate web server
 var logs = null;
 var app = express();
+
+// slack events adapter must come before bodyParser
+app.use('/api/slack/action-endpoint', slackEvents.requestListener());
+
+// Attach listeners to events by Slack Event "type". See: https://api.slack.com/events/message.im
+slackEvents.on('message', incomingSlackMessageEvent);
+slackEvents.on('app_mention', incomingSlackMessageEvent);
+slackEvents.on('error', (error) => {
+  console.log(error.name);
+});
 
 // Bootstrap application settings
 app.use(express.static('./public')); // load UI from public folder
 app.use(bodyParser.json());
-
 
 // Instantiate the Watson AssistantV1 Service as per WDC 2.2.0
 var assistant = new AssistantV1({
@@ -58,8 +140,8 @@ var toneAnalyzer = new ToneAnalyzerV3({
   version: '2017-09-21'
 });
 
-// Endpoint to be called from the client side
-app.post('/api/message', function(req, res) {
+// Watson endpoint to be called from the client side
+app.post('/api/message', (req, res) => {
   var workspace = process.env.WORKSPACE_ID || '<workspace-id>';
   if (!workspace || workspace === '<workspace-id>') {
     return res.json({
@@ -68,6 +150,7 @@ app.post('/api/message', function(req, res) {
       }
     });
   }
+
   var payload = {
     workspace_id: workspace,
     context: {},
@@ -85,8 +168,15 @@ app.post('/api/message', function(req, res) {
       // Add the user object (containing tone) to the context object for
       // Assistant
       payload.context = toneDetection.initUser();
+
+      // hard-code some context for debugging
+      // payload.context.userinfo = {
+      //   'username' : 'Foo Barstein'
+      // };
+
     }
 
+    console.log('CONTEXT: ' + JSON.stringify(payload, null, 2));
 
     // Invoke the tone-aware call to the Assistant Service
     invokeToneConversation(payload, res);
@@ -176,140 +266,6 @@ function invokeToneConversation(payload, res) {
     });
   }).catch(function(err) {
     console.log(JSON.stringify(err, null, 2));
-  });
-}
-
-/**
- * Enable logging Must add an instance of the Cloudant NoSQL DB to the
- * application in BlueMix and add the Cloudant credentials to the application's
- * user-defined Environment Variables.
- */
-if (cloudantUrl) {
-  // If logging has been enabled (as signalled by the presence of the
-  // cloudantUrl) then the
-  // app developer must also specify a LOG_USER and LOG_PASS env vars.
-  if (!process.env.LOG_USER || !process.env.LOG_PASS) {
-    throw new Error('LOG_USER OR LOG_PASS not defined, both required to enable logging!');
-  }
-  // add basic auth to the endpoints to retrieve the logs!
-  var auth = basicAuth(process.env.LOG_USER, process.env.LOG_PASS);
-  // If the cloudantUrl has been configured then we will want to set up a nano
-  // client
-  var nano = require('nano')(cloudantUrl);
-  // add a new API which allows us to retrieve the logs (note this is not
-  // secure)
-  nano.db.get('food_coach', function(err) {
-    if (err) {
-      console.error(err);
-      nano.db.create('food_coach', function(errCreate) {
-        console.error(errCreate);
-        logs = nano.db.use('food_coach');
-      });
-    } else {
-      logs = nano.db.use('food_coach');
-    }
-  });
-
-  // Endpoint which allows deletion of db
-  app.post('/clearDb', auth, function(req, res) {
-    nano.db.destroy('food_coach', function() {
-      nano.db.create('food_coach', function() {
-        logs = nano.db.use('food_coach');
-      });
-    });
-    return res.json({'message': 'Clearing db'});
-  });
-
-  // Endpoint which allows conversation logs to be fetched
-  // csv - user input, conversation_id, timestamp
-
-  app.get('/chats', auth, function(req, res) {
-    logs.list({
-      include_docs: true,
-      'descending': true
-    }, function(err, body) {
-      console.error(err);
-      // download as CSV
-      var csv = [];
-      csv.push([
-        'Id',
-        'Question',
-        'Intent',
-        'Confidence',
-        'Entity',
-        'Emotion',
-        'Output',
-        'Time'
-      ]);
-      body.rows.sort(function(a, b) {
-        if (a && b && a.doc && b.doc) {
-          var date1 = new Date(a.doc.time);
-          var date2 = new Date(b.doc.time);
-          var t1 = date1.getTime();
-          var t2 = date2.getTime();
-          var aGreaterThanB = t1 > t2;
-          var equal = t1 === t2;
-          if (aGreaterThanB) {
-            return 1;
-          }
-          return equal
-            ? 0
-            : -1;
-        }
-      });
-      body.rows.forEach(function(row) {
-        var question = '';
-        var intent = '';
-        var confidence = 0;
-        var time = '';
-        var entity = '';
-        var outputText = '';
-        var emotion = '';
-        var id = '';
-
-        if (row.doc) {
-          var doc = row.doc;
-          if (doc.response.context) {
-            id = doc.response.context.conversation_id;
-          }
-
-          if (doc.response.context && doc.response.context.user) {
-            emotion = doc.response.context.user.tone.emotion.current;
-          }
-
-          if (doc.request && doc.request.input) {
-            question = doc.request.input.text;
-          }
-          if (doc.response) {
-            intent = '<no intent>';
-            if (doc.response.intents && doc.response.intents.length > 0) {
-              intent = doc.response.intents[0].intent;
-              confidence = doc.response.intents[0].confidence;
-            }
-            entity = '<no entity>';
-            if (doc.response.entities && doc.response.entities.length > 0) {
-              entity = doc.response.entities[0].entity + ' : ' + doc.response.entities[0].value;
-            }
-            outputText = '<no dialog>';
-            if (doc.response.output && doc.response.output.text) {
-              outputText = doc.response.output.text.join(' ');
-            }
-          }
-          time = new Date(doc.time).toLocaleString();
-        }
-        csv.push([
-          id,
-          question,
-          intent,
-          confidence,
-          entity,
-          emotion,
-          outputText,
-          time
-        ]);
-      });
-      res.json(csv);
-    });
   });
 }
 
