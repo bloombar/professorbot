@@ -3,7 +3,7 @@
 var Api = (function() {
   var requestPayload;
   var responsePayload;
-  var messageEndpoint = '/api/message';
+  var messageEndpoint = '/api/watson/message';
 
   // Publicly accessible methods defined
   return {

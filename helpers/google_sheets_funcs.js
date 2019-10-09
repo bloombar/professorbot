@@ -6,6 +6,77 @@ const {google} = require('googleapis');
 const GOOGLE_TOKEN_PATH = process.env.GOOGLE_TOKEN_PATH;
 const GOOGLE_CREDENTIALS_PATH = process.env.GOOGLE_CREDENTIALS_PATH;
 
+/**
+ * Update the internal Slack IDs in the Google Sheet
+ * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
+ * @param {Object}[] users An array of user objects.
+ */
+let addSlackIdsToSheet = (auth, users) => {
+  // loop through list of user objects
+  users.forEach((user) => {
+    console.log(user.id + " - " + user.email);
+  });
+};
+
+/**
+ * Get a student's row number from the email address
+ * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
+ * @param String email The email address of the student.
+ */
+let getRowNumberByEmail = (auth, email) => {
+  let rows = getRows(auth, process.env.GOOGLE_SHEET_ID,1, 1000);
+      rows.map((row) => {
+          let cellValue = row[col_num];
+          console.log(`CELL VALUE: ${cellValue}`);
+          return cellValue;
+      });
+}
+
+/**
+ * Prints the names and majors of students in a sample spreadsheet:
+ * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
+ */
+function getCellValue(auth, row_num, col_num) {
+  const sheets = google.sheets({version: 'v4', auth});
+  sheets.spreadsheets.values.get({
+    spreadsheetId: process.env.GOOGLE_SHEET_ID,
+    range: `Overall!${row_num}:${row_num}`,
+  }, (err, res) => {
+    if (err) return console.log('The Google API returned an error: ' + err);
+    const rows = res.data.values;
+    if (rows.length) {
+      // Print columns A and F, which correspond to indices 0 and 5.
+      rows.map((row) => {
+          let cellValue = row[col_num];
+          console.log(`CELL VALUE: ${cellValue}`);
+          return cellValue;
+      });
+    } else {
+      console.log('CELL VALUE: no data found.');
+      return false;
+    }
+  });
+}
+
+/**
+ * Get a student's row number from the email address
+ * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
+ * @param String sheetId The id of the sheet to access.
+ * @param Number startRow The row number to start from.
+ * @param Number endRow The row number to end on.
+ */
+let getRows = (auth, sheetId, startRow, endRow) => {
+  const sheets = google.sheets({version: 'v4', auth});
+  sheets.spreadsheets.values.get({
+    spreadsheetId: sheetId,
+    range: `Overall!${startRow}:${endRow}`, // hopefully that's large enough
+  }, (err, res) => {
+    if (err) return console.log('The Google API returned an error: ' + err);
+    const rows = res.data.values;
+    return (rows.length) ? rows : false;
+  });
+};
+
 // run any method that requires authorization first
 function googleAPIRun(callback) {
     // Load client secrets from a local file.
@@ -66,36 +137,13 @@ function authorize(credentials, callback) {
     });
   }
   
-  /**
-   * Prints the names and majors of students in a sample spreadsheet:
-   * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
-   */
-  function getCellValue(auth, row_num, col_num) {
-    const sheets = google.sheets({version: 'v4', auth});
-    sheets.spreadsheets.values.get({
-      spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: `Overall!${row_num}:${row_num}`,
-    }, (err, res) => {
-      if (err) return console.log('The Google API returned an error: ' + err);
-      const rows = res.data.values;
-      if (rows.length) {
-        // Print columns A and F, which correspond to indices 0 and 5.
-        rows.map((row) => {
-            let cellValue = row[col_num];
-            console.log(`CELL VALUE: ${cellValue}`);
-            return cellValue;
-        });
-      } else {
-        console.log('CELL VALUE: no data found.');
-        return false;
-      }
-    });
-  }
-  
+
   module.exports = {
       authorize: authorize,
       getNewToken: getNewToken,
       googleAPIRun: googleAPIRun,
-      getCellValue: getCellValue
+      getCellValue: getCellValue,
+      addSlackIdsToSheet: addSlackIdsToSheet,
+      getRowNumberByEmail: getRowNumberByEmail
   }
   
