@@ -1,0 +1,69 @@
+== Accounts ==
+IBM Watson Assistant Account
+https://assistant-eu-de.watsonplatform.net/eu-de/crn:v1:bluemix:public:conversation:eu-de:a~2Fd635075534684679990044905698b3f7:bbddbcd7-74b0-460d-8d6d-e4467a99a9b6::/assistants
+
+Slack App Account
+https://api.slack.com/apps/AP3FKBFK7/general?
+
+== Watson Node.js SDK ==
+
+Watson Assistant API Documentation
+https://cloud.ibm.com/apidocs/assistant-v2?code=node#authentication
+
+Watson Documentation
+https://cloud.ibm.com/developer/watson/documentation
+
+Watson Developer Cloud Node.js SDK
+https://github.com/watson-developer-cloud/node-sdk
+
+Watson Node.js SDK Deep Dive (a bit out of date)
+https://www.youtube.com/watch?v=a_iCJJcTPns
+
+== Watson Context variables ==
+Leveraging Context Variables for Processing Logic and Managing State in Watson Assistant
+https://medium.com/ibm-watson/leveraging-context-variables-for-processing-logic-and-managing-state-in-watson-assistant-98d4a5c4cc40
+
+Context variable set in Watson assistant by Node js
+https://developer.ibm.com/answers/questions/488704/context-variable-set-in-watson-assistant-by-node-j/
+
+== Slack Node.js SDK ==
+Slack Developer Kit for Node.js
+https://github.com/slackapi/node-slack-sdk
+
+== Slack API Reference ==
+Slack Events API
+https://api.slack.com/events/
+
+Slack Web API
+https://api.slack.com/web
+
+Slack API users.list and other methods
+https://api.slack.com/methods/users.list/test
+
+== Google Sheets API == 
+
+Node.js - Using Google Sheets API with OAuth 2
+https://www.woolha.com/tutorials/node-js-using-google-sheets-api-with-oauth-2
+
+Method: spreadsheets.values.get
+https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets.values/get
+
+== Local Development Setup ==
+
+My Ngrok forwarding URL
+https://d2b8cc39.ngrok.io/api/slack/scrape-users
+
+Local Watson Example Interface
+http://localhost:3000/
+
+== Digital Ocean Deployment ==
+
+Excellent Video tutorials by Juriy Bura
+https://www.youtube.com/watch?v=zutCD7HMgwA&list=PLQlWzK5tU-gDyxC1JTpyC2avvJlt3hrIh&index=11
+
+My Domain
+http://seriousdata.org/
+
+My Digital Ocean Project
+https://cloud.digitalocean.com/networking/domains?i=9159e5&preserveScrollPosition=false
+
