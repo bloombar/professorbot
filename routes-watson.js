@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const { invokeToneConversation } = require('./watson-helpers');
+const { getAssistant, createSession, invokeToneConversation } = require('./watson-helpers');
 
 // Watson endpoint to be called from the client side
 router.post('/message', (req, res) => {

@@ -7,6 +7,7 @@ const bodyParser = require('body-parser'); // parser for post requests
 const port = process.env.PORT || 3000;
 
 // IBM Watson integration
+const { getAssistant, createSession } = require('./watson-helpers');
 const AssistantV2 = require('ibm-watson/assistant/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
@@ -21,12 +22,14 @@ const { IamAuthenticator } = require('ibm-watson/auth');
 
 // Google Sheets integration
 const fs = require('fs');
-const helpers = require('./helpers/google-sheet');
+const googleSheets = require('./helpers/google-sheet');
 // usage:
-//const rows = await helpers.read(process.env.GOOGLE_SHEET_ID, 'Overall!A:Z');
-//await helpers.append(process.env.GOOGLE_SHEET_ID, 'Access!Y:Z', [ ["1", "2", "3"], ["4", "5", "6"] ]);
-//await helpers.update(process.env.GOOGLE_SHEET_ID, 'Access!Y7:AA', [ ["A", "B", "C"], ["D", "E", "F"] ]);
-//await helpers.create('Example spreadsheet');
+//const rows = await googleSheets.read(process.env.GOOGLE_SHEET_ID, 'Overall!A:Z');
+//await googleSheets.append(process.env.GOOGLE_SHEET_ID, 'Access!Y:Z', [ ["1", "2", "3"], ["4", "5", "6"] ]);
+//await googleSheets.update(process.env.GOOGLE_SHEET_ID, 'Access!Y7:AA', [ ["A", "B", "C"], ["D", "E", "F"] ]);
+//await googleSheets.create('Example spreadsheet');
+
+console.log('-- APP STARTING UP --');
 
 // instantiate web server
 var logs = null;
@@ -39,30 +42,12 @@ app.use('/api/slack', require('./routes-slack'));
 app.use('/api/watson', require('./routes-watson'));
 
 // Bootstrap application settings
-app.use(express.static('./public')); // load UI from public folder
-app.use(bodyParser.json());
+//app.use(express.static('./public')); // load UI from public folder
+//app.use(bodyParser.json());
 
-// instantiate assistant
-const assistant = new AssistantV2({
-  version: '2019-02-28',
-  authenticator: new IamAuthenticator({
-    apikey: process.env.ASSISTANT_IAM_APIKEY,
-  }),
-  url: process.env.ASSISTANT_URL,
-});
-
-// get session id
-assistant.createSession({
-  assistantId: process.env.ASSISTANT_ID
-})
-  .then(res => {
-    //console.log(JSON.stringify(res, null, 2));
-    assistant.sessionId = res.result.session_id;
-    //console.log(assistant.sessionId);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+// instantiate assistant instance
+app.assistant = getAssistant();
+app.sessions = {}; // associative array to hold unique session ids for each correspondent
 
 // Instantiate the Watson Tone Analyzer Service as per WDC 2.2.0
 // var toneAnalyzer = new ToneAnalyzerV3({

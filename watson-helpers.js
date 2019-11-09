@@ -2,38 +2,61 @@
 const AssistantV2 = require('ibm-watson/assistant/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
-// instantiate assistanat
-const assistant = new AssistantV2({
+/**
+ * Get an assistant object
+ * @returns A watson assistant object
+ */
+function getAssistant() {
+  let ass = new AssistantV2({
     version: '2019-02-28',
     authenticator: new IamAuthenticator({
       apikey: process.env.ASSISTANT_IAM_APIKEY,
     }),
     url: process.env.ASSISTANT_URL,
   });
+  return ass;
+}
 
-// get session id
-assistant.createSession({
+/**
+ * Create a new session with the assistant
+ * @param {AssistantV2} assistant An existing watson assistant object
+ */
+async function createSession(userId) {
+  console.log('creating session id');
+
+  // get assistant object
+  const app = require('./app');
+  let assistant = app.assistant;
+
+  // get session id
+  assistant.createSession({
     assistantId: process.env.ASSISTANT_ID
   })
-    .then(res => {
-      //console.log(JSON.stringify(res, null, 2));
-      assistant.sessionId = res.result.session_id;
-      console.log(assistant.sessionId);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  
+  .then(res => {
+    //console.log(JSON.stringify(res, null, 2));
+    app.sessions[userId] = res.result.session_id;
+    console.log('-- watson assistant session created --');
+    console.log(userId + ' -> ' + app.sessions[userId]);
+  })
+  .catch(err => {
+    console.log('-- ERROR CREATING WATSON ASSISTANT SESSION --');
+    console.error(err);
+  });
+}
+
 /**
  * Get a response from Watson Assistant chatbot.
  * @param String message The text stimulus to which Watson Assistantwill react. 
  */
-function getResponse(message) {
+function getResponse(message, assistant, userId) {
+  // get session id from user id
+  const app = require('./app');
+  sessionId = app.sessions[userId];
 
-      // prepare data to send to Watson
+  // prepare data to send to Watson
       let payload = {
         assistantId: process.env.ASSISTANT_ID,
-        sessionId: assistant.sessionId,
+        sessionId: sessionId,
         context: {},
         input: {
             'message_type': 'text',
@@ -41,40 +64,53 @@ function getResponse(message) {
         }
       };
   
-      // get watson's response
-      assistant.message(payload)
-        .then(res => {
-            console.log(JSON.stringify(res, null, 2));
+      return new Promise((resolve, reject) => {
 
-            //TO DO
-            // res is full html of response... need to parse that...
+        // get watson's response
+        assistant.message(payload)
+          .then(res => {
+            
+            let responseBody = res.result.output; // the main body
 
-            let responseMessage = res.output.text[0] || '';
+            // reject blank responses
+            if (responseBody.generic.length == 0) {
+              reject(responseBody);
+            }
+            
+            let responseMessage = responseBody.generic[0].text || ''; // the text in the body
+
+            // debugging
+            console.log("-- watson-helper.js message --");
+            //console.log(JSON.stringify(res, null, 2));
+            //console.log(responseBody.generic[0].text);
+
             responseMessage = (responseMessage) ? responseMessage : ''; // remove undefined
-    
-            // debugging: output watson's response data
-            //console.log('WATSON RESPONSE: ' + JSON.stringify(watsonResponse, null, 2));
     
             // add any indicator of confusion, if confidence is low
             let prefixes = ['Hmm... ', 'Well... ', 'Yes... ', 'Ok... ', 'Alright... '];
             let dumbPrefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-            if (watsonResponse.intents.length == 0 || (watsonResponse.intents && watsonResponse.intents[0].confidence <= 0.5)) {
+            if (responseBody.intents.length == 0 || (responseBody.intents && responseBody.intents[0].confidence <= 0.5)) {
                 responseMessage = dumbPrefix + responseMessage;
             } // end if intent
     
             // do we need to get a grade from Google Sheets?
-            if (watsonResponse.intents.length > 0 && (watsonResponse.intents && watsonResponse.intents[0].intent == 'get_grade')) {
-            //TO DO
-            // GET GRADES FROM GOOGLE
+            if (responseBody.intents.length > 0 && (responseBody.intents && responseBody.intents[0].intent == 'get_grade')) {
+              //TO DO
+              // GET GRADES FROM GOOGLE
+              // INTEGRATE GRADES INTO MESSAGE
     
             } // if intent is get_grade
     
             response = responseMessage;
-            return responseMessage;
-        })
-        .catch(err => {
-            console.log(err);
-        });
+            resolve(responseMessage);
+          })
+          .catch(err => {
+              console.error(err);
+              reject(err);
+          });
+
+      });
+
 }
 
 /**
@@ -167,5 +203,7 @@ function updateMessage(input, response) {
 module.exports = {
     getResponse: getResponse,
     invokeToneConversation: invokeToneConversation,
-    updateMessage: updateMessage
+    updateMessage: updateMessage,
+    createSession: createSession,
+    getAssistant: getAssistant
 };
