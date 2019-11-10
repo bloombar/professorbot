@@ -1,3 +1,5 @@
+require('dotenv').config({silent: true});
+
 // IBM Watson integration
 const AssistantV2 = require('ibm-watson/assistant/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
@@ -60,7 +62,12 @@ class WatsonSession {
     this.updateExpiration();
   }
   updateExpiration() {
-    this.expiration = Math.floor(Date.now() / 1000) + 5*60; // 5 minutes in the future
+    // set the expiration date to the current time plus watson's timeout period after inactivity
+    this.expiration = Math.floor(Date.now() / 1000) + parseInt(process.env.ASSISTANT_SESSION_TIMEOUT_SECONDS); // 5 minutes in the future
+    // console.log('-- extending watson session --');
+    // console.log('new expiration: ' + this.expiration);
+    // console.log('time now: ' + Math.floor(Date.now() / 1000));
+    // console.log('time left: ' + (this.expiration - Math.floor(Date.now() / 1000)));
   }
   expired() {
     let timeNow = Math.floor(Date.now() / 1000);
@@ -83,6 +90,10 @@ async function getResponse(message, assistant, userId) {
     // the session is expired... create a new one
     await createSession(userId);
   }
+  else {
+    console.log('-- session still valild --');
+    console.log(Math.floor(Date.now() / 1000) - session.expiration);
+  }
   // assuming the session is valid or has been renewed...
   session = app.sessions[userId]; // use the new session
   sessionId = session.sessionId;
@@ -103,22 +114,24 @@ async function getResponse(message, assistant, userId) {
         // get watson's response
         assistant.message(payload)
           .then(res => {
-            
+            // get the body of the response message
             let responseBody = res.result.output; // the main body
 
             // reject blank responses
             if (responseBody.generic.length == 0) {
               reject(responseBody);
             }
-            
-            let responseMessage = responseBody.generic[0].text || ''; // the text in the body
+
+            // get the response text in the body
+            let responseMessage = responseBody.generic[0].text || ''; 
 
             // debugging
             console.log("-- watson-helper.js message --");
             //console.log(JSON.stringify(res, null, 2));
             //console.log(responseBody.generic[0].text);
 
-            responseMessage = (responseMessage) ? responseMessage : ''; // remove undefined
+            // remove any undefined response messages
+            responseMessage = (responseMessage) ? responseMessage : ''; 
     
             // add any indicator of confusion, if confidence is low
             let prefixes = ['Hmm... ', 'Well... ', 'Yes... ', 'Ok... ', 'Alright... '];
@@ -134,7 +147,11 @@ async function getResponse(message, assistant, userId) {
               // INTEGRATE GRADES INTO MESSAGE
     
             } // if intent is get_grade
-    
+   
+            // sessions are renewed with each request to Watson Assistant
+            session.updateExpiration();
+
+            // return response
             response = responseMessage;
             resolve(responseMessage);
           })
