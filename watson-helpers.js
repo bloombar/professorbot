@@ -29,14 +29,17 @@ async function createSession(userId) {
   let assistant = app.assistant;
 
   // get session id
-  assistant.createSession({
+  await assistant.createSession({
     assistantId: process.env.ASSISTANT_ID
   })
   .then(res => {
     //console.log(JSON.stringify(res, null, 2));
-    app.sessions[userId] = res.result.session_id;
+    let sessionId = res.result.session_id;
+    let session = new WatsonSession(userId, sessionId);
+    app.sessions[userId] = session;
     console.log('-- watson assistant session created --');
-    console.log(userId + ' -> ' + app.sessions[userId]);
+    console.log(session);
+    return session;
   })
   .catch(err => {
     console.log('-- ERROR CREATING WATSON ASSISTANT SESSION --');
@@ -45,13 +48,44 @@ async function createSession(userId) {
 }
 
 /**
+ * A session with Watson Assistant, including a timestamp of when it was last used
+ * Watson sessions last as long as the user keeps interacting,
+ * plus an additional 5 minutes on Lite and Standard Plans
+ * and up to 60 minutes for Plus and Premium Pklans
+ */
+class WatsonSession {
+  constructor(userId, sessionId) {
+    this.userId = userId;
+    this.sessionId = sessionId;
+    this.updateExpiration();
+  }
+  updateExpiration() {
+    this.expiration = Math.floor(Date.now() / 1000) + 5*60; // 5 minutes in the future
+  }
+  expired() {
+    let timeNow = Math.floor(Date.now() / 1000);
+    return (timeNow > this.expiration);
+  }
+  toString() {
+      return `(${this.userId} -> ${this.sessionId})`;
+  }
+}
+
+/**
  * Get a response from Watson Assistant chatbot.
  * @param String message The text stimulus to which Watson Assistantwill react. 
  */
-function getResponse(message, assistant, userId) {
+async function getResponse(message, assistant, userId) {
   // get session id from user id
   const app = require('./app');
-  sessionId = app.sessions[userId];
+  let session = app.sessions[userId]; // a WatsonSessionObject
+  if (session.expired()) {
+    // the session is expired... create a new one
+    await createSession(userId);
+  }
+  // assuming the session is valid or has been renewed...
+  session = app.sessions[userId]; // use the new session
+  sessionId = session.sessionId;
 
   // prepare data to send to Watson
       let payload = {
@@ -205,5 +239,6 @@ module.exports = {
     invokeToneConversation: invokeToneConversation,
     updateMessage: updateMessage,
     createSession: createSession,
-    getAssistant: getAssistant
+    getAssistant: getAssistant,
+    WatsonSession: WatsonSession
 };
