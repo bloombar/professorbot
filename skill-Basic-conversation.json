@@ -1,0 +1,2117 @@
+{
+  "name": "Basic conversation",
+  "intents": [
+    {
+      "intent": "Bot_Control_Start_Over",
+      "examples": [
+        {
+          "text": "Let us reopen this again."
+        },
+        {
+          "text": "I would like to start all over"
+        },
+        {
+          "text": "I want start from the beginning"
+        },
+        {
+          "text": "I need to reset."
+        },
+        {
+          "text": "How can I start over?"
+        },
+        {
+          "text": "Can we please start over?"
+        },
+        {
+          "text": "Begin over!"
+        },
+        {
+          "text": "Back to the top"
+        },
+        {
+          "text": "Back to the beginning"
+        },
+        {
+          "text": "Actually, let's start over"
+        },
+        {
+          "text": "We will need to begin again"
+        },
+        {
+          "text": "We need a do-over"
+        },
+        {
+          "text": "Start over"
+        },
+        {
+          "text": "Restart"
+        },
+        {
+          "text": "Please start a new chat"
+        },
+        {
+          "text": "Please reset"
+        },
+        {
+          "text": "Please initiate from the beginning"
+        },
+        {
+          "text": "One more time from the beginning"
+        },
+        {
+          "text": "Let's pick this up from the top again."
+        },
+        {
+          "text": "Let's go back to square one"
+        }
+      ],
+      "description": "Restart bot or current flow."
+    },
+    {
+      "intent": "Bot_Control_Change_Subject",
+      "examples": [
+        {
+          "text": "A different matter"
+        },
+        {
+          "text": "Can I ask another question?"
+        },
+        {
+          "text": "I have a question"
+        },
+        {
+          "text": "Talk about something else"
+        },
+        {
+          "text": "Let us talk about something else"
+        },
+        {
+          "text": "Let us change the topic"
+        },
+        {
+          "text": "I have one more question"
+        },
+        {
+          "text": "Here is another issue"
+        },
+        {
+          "text": "Help me with this other question"
+        },
+        {
+          "text": "Discuss something else"
+        },
+        {
+          "text": "Chat about something else"
+        },
+        {
+          "text": "Change topic"
+        },
+        {
+          "text": "Can I ask you a question?"
+        },
+        {
+          "text": "Can we talk about something else?"
+        },
+        {
+          "text": "Another thing"
+        }
+      ],
+      "description": "Change to a different topic."
+    },
+    {
+      "intent": "greeting",
+      "examples": [
+        {
+          "text": "I hope you are doing well"
+        },
+        {
+          "text": "Howdy"
+        },
+        {
+          "text": "Dear Professor"
+        },
+        {
+          "text": "Heya"
+        },
+        {
+          "text": "@prof"
+        },
+        {
+          "text": "Hi Professor"
+        },
+        {
+          "text": "Hi there"
+        },
+        {
+          "text": "Hey"
+        },
+        {
+          "text": "Hello"
+        },
+        {
+          "text": "Hi"
+        },
+        {
+          "text": "I hope I'm not disturbing you"
+        },
+        {
+          "text": "I hope you don't mind me asking a question"
+        },
+        {
+          "text": "I hope you are well"
+        },
+        {
+          "text": "How are you?"
+        }
+      ],
+      "description": "Pleasantries of saying hello"
+    },
+    {
+      "intent": "request_grade",
+      "examples": [
+        {
+          "text": "I haven't received my grade."
+        },
+        {
+          "text": "How can I tell how I did?"
+        },
+        {
+          "text": "Did I do well?"
+        },
+        {
+          "text": "How did I do?"
+        },
+        {
+          "text": "Can you tell me my score?"
+        },
+        {
+          "text": "I'm wondering what my grade is"
+        },
+        {
+          "text": "I haven't received a grade."
+        },
+        {
+          "text": "What was my score?"
+        },
+        {
+          "text": "What was my grade?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Bot_Control_Clarification",
+      "examples": [
+        {
+          "text": "I didn't catch that"
+        },
+        {
+          "text": "What do you mean?"
+        },
+        {
+          "text": "What do you mean by that?"
+        },
+        {
+          "text": "What are you talking about?"
+        },
+        {
+          "text": "What are you saying?"
+        },
+        {
+          "text": "What are you referring to?"
+        },
+        {
+          "text": "Let's try to say that again more clearly, shall we?"
+        },
+        {
+          "text": "I need more information"
+        },
+        {
+          "text": "I don't understand"
+        },
+        {
+          "text": "I don't understand what you're saying"
+        },
+        {
+          "text": "I don't get it"
+        },
+        {
+          "text": "I didn't understand that properly"
+        },
+        {
+          "text": "I didn't quite understand what you said"
+        },
+        {
+          "text": "I did not quite understand what you gave me"
+        },
+        {
+          "text": "Explains"
+        },
+        {
+          "text": "Come again?"
+        },
+        {
+          "text": "Can you say that again please?"
+        }
+      ],
+      "description": "Repeat or clarify last statement."
+    },
+    {
+      "intent": "Bot_Control_Confirm_Presence",
+      "examples": [
+        {
+          "text": "Are you there?"
+        },
+        {
+          "text": "Am I talking to someone?"
+        },
+        {
+          "text": "Anyone there?"
+        },
+        {
+          "text": "Are you leaving me?"
+        },
+        {
+          "text": "Are you on?"
+        },
+        {
+          "text": "Are you still around?"
+        },
+        {
+          "text": "Are you still here with me?"
+        },
+        {
+          "text": "Did you go somewhere?"
+        },
+        {
+          "text": "Did you hear what I said?"
+        },
+        {
+          "text": "Have I lost you?"
+        },
+        {
+          "text": "I am still holding"
+        },
+        {
+          "text": "Is anybody here?"
+        },
+        {
+          "text": "Is anybody home?"
+        },
+        {
+          "text": "Speak to me if you are there."
+        },
+        {
+          "text": "Where'd you go?"
+        },
+        {
+          "text": "You around?"
+        }
+      ],
+      "description": "Ask the bot to indicate that it is available."
+    },
+    {
+      "intent": "Bot_Control_Approve_Response",
+      "examples": [
+        {
+          "text": "rad"
+        },
+        {
+          "text": "Yeah, that's it!"
+        },
+        {
+          "text": "Very well. Let's do it."
+        },
+        {
+          "text": "This is alright"
+        },
+        {
+          "text": "That's exactly what I want"
+        },
+        {
+          "text": "That is what I need"
+        },
+        {
+          "text": "That is the proper response."
+        },
+        {
+          "text": "That is right"
+        },
+        {
+          "text": "That is precisely what I was looking for"
+        },
+        {
+          "text": "Sweet"
+        },
+        {
+          "text": "Sure thing!"
+        },
+        {
+          "text": "Indeed!"
+        },
+        {
+          "text": "I like that"
+        },
+        {
+          "text": "I agree"
+        },
+        {
+          "text": "Great"
+        },
+        {
+          "text": "Got it"
+        },
+        {
+          "text": "For sure!"
+        },
+        {
+          "text": "Correct"
+        },
+        {
+          "text": "All right"
+        },
+        {
+          "text": "Ok. thanks!"
+        },
+        {
+          "text": "Affirmative. That's what I'm looking for."
+        },
+        {
+          "text": "You read my mind"
+        },
+        {
+          "text": "Yes"
+        },
+        {
+          "text": "Cool, thanks"
+        },
+        {
+          "text": "ok"
+        },
+        {
+          "text": "sure"
+        },
+        {
+          "text": "uh huh"
+        },
+        {
+          "text": "cool"
+        },
+        {
+          "text": "okay"
+        },
+        {
+          "text": "Good, thanks"
+        },
+        {
+          "text": "Great, thanks"
+        }
+      ],
+      "description": "Acknowledge that the response satisfies a question."
+    },
+    {
+      "intent": "request_help",
+      "examples": [
+        {
+          "text": "Can you clarify?"
+        },
+        {
+          "text": "I need some clarification."
+        },
+        {
+          "text": "Can you explain?"
+        },
+        {
+          "text": "Can I talk to you?"
+        },
+        {
+          "text": "I need some help"
+        },
+        {
+          "text": "Can you help me?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Bot_Control_Standby",
+      "examples": [
+        {
+          "text": "I would like to put you on hold"
+        },
+        {
+          "text": "Be patient with me"
+        },
+        {
+          "text": "Can you give me a moment?"
+        },
+        {
+          "text": "Can you wait for me?"
+        },
+        {
+          "text": "Give me a few minutes to get together"
+        },
+        {
+          "text": "Give me a moment"
+        },
+        {
+          "text": "Give me a second"
+        },
+        {
+          "text": "Hold on"
+        },
+        {
+          "text": "I want stop a moment"
+        },
+        {
+          "text": "I will be back"
+        },
+        {
+          "text": "In a moment"
+        },
+        {
+          "text": "Just a sec"
+        },
+        {
+          "text": "Just hold on"
+        },
+        {
+          "text": "Keep holding"
+        },
+        {
+          "text": "Let me see"
+        },
+        {
+          "text": "Need a minute here"
+        },
+        {
+          "text": "Out for a break"
+        },
+        {
+          "text": "Wait"
+        },
+        {
+          "text": "Back again soon"
+        },
+        {
+          "text": "Be back later"
+        }
+      ],
+      "description": "Indicate a delay in providing input to the bot."
+    },
+    {
+      "intent": "apologies",
+      "examples": [
+        {
+          "text": "Sorry to disturb you."
+        },
+        {
+          "text": "I'm sorry"
+        },
+        {
+          "text": "Sorry for bothering you."
+        },
+        {
+          "text": "My bad."
+        },
+        {
+          "text": "Forgive me"
+        },
+        {
+          "text": "Sorry!"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "gratitude",
+      "examples": [
+        {
+          "text": "Thanks a lot."
+        },
+        {
+          "text": "Thanks very much."
+        },
+        {
+          "text": "Thank you very much."
+        },
+        {
+          "text": "Much love."
+        },
+        {
+          "text": "Thanks!"
+        },
+        {
+          "text": "Thank you"
+        },
+        {
+          "text": "You're the best."
+        },
+        {
+          "text": "Much appreciated."
+        },
+        {
+          "text": "Many thanks!"
+        },
+        {
+          "text": "Thank you!"
+        },
+        {
+          "text": "I appreciate it."
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Bot_Control_Reject_Response",
+      "examples": [
+        {
+          "text": "Not the right response"
+        },
+        {
+          "text": "Bad response"
+        },
+        {
+          "text": "I disagree"
+        },
+        {
+          "text": "I do not think it is the answer?"
+        },
+        {
+          "text": "I don't need that"
+        },
+        {
+          "text": "I don't want that"
+        },
+        {
+          "text": "I wasn't looking for that"
+        },
+        {
+          "text": "It is not what I want"
+        },
+        {
+          "text": "It is not what I was looking for"
+        },
+        {
+          "text": "No I'm fine thanks"
+        },
+        {
+          "text": "No"
+        },
+        {
+          "text": "That answer is incorrect"
+        },
+        {
+          "text": "That is not true"
+        },
+        {
+          "text": "That sounds like the wrong response"
+        },
+        {
+          "text": "That was not my intent"
+        },
+        {
+          "text": "That was wrong, try again"
+        },
+        {
+          "text": "Wrong response"
+        },
+        {
+          "text": "You did not understand what I asked"
+        },
+        {
+          "text": "You did not understand what I said"
+        },
+        {
+          "text": "You didn't understand me"
+        },
+        {
+          "text": "You're misunderstanding me"
+        }
+      ],
+      "description": "Indicate the bot's response does not address a question."
+    },
+    {
+      "intent": "request_extra_credit",
+      "examples": [
+        {
+          "text": "Is there anything you can do to help my grade?"
+        },
+        {
+          "text": "Are there any extra credit points?"
+        },
+        {
+          "text": "Is there any way to receive extra credit?"
+        },
+        {
+          "text": "I would like a higher score."
+        },
+        {
+          "text": "I would like more points."
+        },
+        {
+          "text": "I would like to do extra credit."
+        },
+        {
+          "text": "Can you boost my grade?"
+        },
+        {
+          "text": "Can I do extra assignments?"
+        },
+        {
+          "text": "Do you give extra credit if I do extra assignments?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Bot_Control_Unsure",
+      "examples": [
+        {
+          "text": "I have no idea, actually"
+        },
+        {
+          "text": "I don t know what you want"
+        },
+        {
+          "text": "I don t know what you need"
+        },
+        {
+          "text": "I have no idea what you are looking for"
+        },
+        {
+          "text": "I haven't got a clue"
+        },
+        {
+          "text": "I m not certain I get what you re saying"
+        },
+        {
+          "text": "You got me"
+        },
+        {
+          "text": "I m not sure what will make you happy"
+        },
+        {
+          "text": "I m not yet convinced"
+        },
+        {
+          "text": "No clue"
+        },
+        {
+          "text": "No idea"
+        },
+        {
+          "text": "To be honest, I m really not sure"
+        }
+      ],
+      "description": "Indicate no definite answer to a question."
+    },
+    {
+      "intent": "request_email",
+      "examples": [
+        {
+          "text": "No email"
+        },
+        {
+          "text": "I must have missed your message."
+        },
+        {
+          "text": "I must have missed your email."
+        },
+        {
+          "text": "You didn't send an email"
+        },
+        {
+          "text": "I can't find the message."
+        },
+        {
+          "text": "I can't find the email."
+        },
+        {
+          "text": "Can you send the email again?"
+        },
+        {
+          "text": "I don't have a message"
+        },
+        {
+          "text": "I don't have an email"
+        },
+        {
+          "text": "I haven't received any email."
+        },
+        {
+          "text": "No message"
+        },
+        {
+          "text": "I don't see any message"
+        },
+        {
+          "text": "I didn't receive an email"
+        },
+        {
+          "text": "There's nothing in my inbox."
+        },
+        {
+          "text": "Can you re-send the message?"
+        }
+      ],
+      "description": "Desire for improved communications"
+    },
+    {
+      "intent": "Bot_Control_Ignore_Undo",
+      "examples": [
+        {
+          "text": "I didn't mean to do that actually, let's go back"
+        },
+        {
+          "text": "Wait! Let's back up few steps and do that again"
+        },
+        {
+          "text": "Nothing"
+        },
+        {
+          "text": "Not yet"
+        },
+        {
+          "text": "Never"
+        },
+        {
+          "text": "Never mind"
+        },
+        {
+          "text": "Let us redo that again!"
+        },
+        {
+          "text": "It's not what I mean"
+        },
+        {
+          "text": "Ignore this"
+        },
+        {
+          "text": "I did not mean that?"
+        },
+        {
+          "text": "I change my mind."
+        },
+        {
+          "text": "Hold on! I think I want to do it differently."
+        },
+        {
+          "text": "Cancel"
+        },
+        {
+          "text": "Actually, I take that back"
+        }
+      ],
+      "description": "Ask the bot to take one step back."
+    },
+    {
+      "intent": "request_notes",
+      "examples": [
+        {
+          "text": "share the notes"
+        },
+        {
+          "text": "share the slides"
+        },
+        {
+          "text": "Have you posted your notes yet?"
+        },
+        {
+          "text": "When will you post your notes and slides?"
+        },
+        {
+          "text": "Link to your notes"
+        },
+        {
+          "text": "Link to your slides"
+        },
+        {
+          "text": "send us your notes"
+        },
+        {
+          "text": "send us your slides"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "farewells",
+      "examples": [
+        {
+          "text": "See you later"
+        },
+        {
+          "text": "Bye bye"
+        },
+        {
+          "text": "Talk to you later"
+        },
+        {
+          "text": "Byebye"
+        },
+        {
+          "text": "Farewell"
+        },
+        {
+          "text": "Hasta la vista"
+        },
+        {
+          "text": "Bye"
+        },
+        {
+          "text": "Adios"
+        },
+        {
+          "text": "Goodbye"
+        },
+        {
+          "text": "See you"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "lightness_of_being",
+      "examples": [
+        {
+          "text": "that's funny"
+        },
+        {
+          "text": "stop being silly"
+        },
+        {
+          "text": "LMAO"
+        },
+        {
+          "text": "LMFAO"
+        },
+        {
+          "text": ":)"
+        },
+        {
+          "text": "lol"
+        },
+        {
+          "text": "haha"
+        },
+        {
+          "text": "ha"
+        },
+        {
+          "text": "funny"
+        },
+        {
+          "text": "you're funny"
+        }
+      ],
+      "description": "Happiness, joy, and silliness."
+    }
+  ],
+  "entities": [
+    {
+      "entity": "tutors",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Tutor",
+          "synonyms": [
+            "TA",
+            "Teaching Assistant",
+            "T/A"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-number",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-person",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "assignments",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Most recent",
+          "synonyms": [
+            "latest",
+            "the last"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Next",
+          "synonyms": [
+            "upcoming",
+            "the next",
+            "the one after this one"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Assignment",
+          "synonyms": [
+            "Homework",
+            "Home work"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-date",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "quizzes",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Quiz",
+          "synonyms": [
+            "quizzes",
+            "qiz",
+            "quizes",
+            "questionnaire"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "lecture",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Lecture",
+          "synonyms": [
+            "Class",
+            "Session"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "extra_credit",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "extra credit",
+          "synonyms": [
+            "extra points",
+            "bonus points",
+            "bonus credit",
+            "additional points"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "daily_standups",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Daily standups",
+          "synonyms": [
+            "Daily scrum",
+            "Daily meetings",
+            "Team meetings"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "grades",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Exam Grade",
+          "synonyms": [
+            "Test Grade",
+            "Test Score",
+            "Test Performance",
+            "Test Result",
+            "Exam Score",
+            "Exam Performance",
+            "Exam Result"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Assignment Grade",
+          "synonyms": [
+            "Assignment Scoree",
+            "Assignment Performance",
+            "Homework Score",
+            "Homework Performance",
+            "Homework Grade"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Overall Grade",
+          "synonyms": [
+            "Total Grade",
+            "Final Grade",
+            "Course Grade",
+            "Grade in this course"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "agile_development",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Agile software development",
+          "synonyms": [
+            "Scrum",
+            "Lean",
+            "Agile",
+            "Iterative development",
+            "Agile development",
+            "Incremental development",
+            "Incremental software development",
+            "Iterative software development",
+            "Incremental software engineering",
+            "Agile software development",
+            "Agile software engineering"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "email",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "email",
+          "synonyms": [
+            "message",
+            "e-mail",
+            "inbox",
+            "emails",
+            "mail",
+            "messages",
+            "mailbox",
+            "inboxes",
+            "gmail"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "notes",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Notes",
+          "synonyms": [
+            "documents"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Slides",
+          "synonyms": [
+            "slide",
+            "presentation",
+            "keynote",
+            "powerpoint"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "professors",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Professor",
+          "synonyms": [
+            "Amos",
+            "Bloomberg",
+            "Prof",
+            "Instructor"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "repository",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Repository",
+          "synonyms": [
+            "code base",
+            "codebase",
+            "code on GitHub",
+            "code in Git",
+            "project in Git",
+            "project in GitHub",
+            "GitHub code",
+            "Git code"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "graders",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Grader",
+          "synonyms": [
+            "Grader"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "sys-time",
+      "values": [],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "exams",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Exam 3",
+          "synonyms": [
+            "Final Exam",
+            "Final",
+            "Final Test",
+            "3rd exam",
+            "3rd test",
+            "last exam"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Exam 2",
+          "synonyms": [
+            "Midterm #2",
+            "Second Exam",
+            "Second Midterm",
+            "Second",
+            "Midterm 2",
+            "Second Test",
+            "2nd exam",
+            "2nd test",
+            "2nd midterm"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Exam 1",
+          "synonyms": [
+            "Midterm #1",
+            "First Exam",
+            "First Midterm",
+            "First",
+            "Midterm 1",
+            "First Test",
+            "Midterm",
+            "Mid-term",
+            "Midterm Exam",
+            "Midterm Test",
+            "1st exam",
+            "1st test",
+            "1st midterm"
+          ]
+        },
+        {
+          "type": "synonyms",
+          "value": "Exam",
+          "synonyms": [
+            "Exam",
+            "Test",
+            "the exam",
+            "midterm"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "language": "en",
+  "metadata": {
+    "api_version": {
+      "major_version": "v1",
+      "minor_version": "2018-09-20"
+    }
+  },
+  "skill_id": "a50a6acc-94f3-499f-98fe-b8fff39f52b9",
+  "description": "",
+  "dialog_nodes": [
+    {
+      "type": "slot",
+      "parent": "node_8_1573422209933",
+      "variable": "$assignments",
+      "dialog_node": "slot_3_1573422270480",
+      "previous_sibling": "response_5_1573423376684"
+    },
+    {
+      "type": "response_condition",
+      "title": "response_5_1573423376684",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Did you want to talk here, or do you prefer to speak in person?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_8_1573422209933",
+      "disabled": true,
+      "dialog_node": "response_5_1573423376684"
+    },
+    {
+      "type": "response_condition",
+      "title": "response_9_1570151438469",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello!  What can I do for you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "Welcome",
+      "disabled": true,
+      "conditions": "welcome",
+      "dialog_node": "response_9_1570151438469"
+    },
+    {
+      "type": "standard",
+      "title": "Default",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Grades are generally sent via email every week or so (give or take a few days).  We send out the complete set of emails as soon as we complete grading of any given assignment, exam, and so on."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1570152029057",
+      "conditions": "true",
+      "dialog_node": "node_7_1573356880178",
+      "previous_sibling": "node_8_1573355058790"
+    },
+    {
+      "type": "standard",
+      "title": "Quizzes",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Once we release Quiz grades, you receive an email directly from Google Forms.  This email contains a link to the Quiz, where you will see your answers, the correct answers, and your grade.  Sometimes the link in this email is invisible - it shows up as white text on a white background.  If that is the case, you can hover your cursor in the white area underneath the text and you will see the cursor change to a hand, indicating that you can click."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1570152029057",
+      "conditions": "@quizzes",
+      "dialog_node": "node_8_1573355058790",
+      "previous_sibling": "node_8_1573355025956"
+    },
+    {
+      "type": "response_condition",
+      "title": "response_2_1570194852858",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Once we release Quiz grades, you receive an email directly from Google Forms.  This email contains a link to the Quiz, where you will see your answers, the correct answers, and your grade.  Sometimes the link in this email is invisible - it shows up as white text on a white background.  If that is the case, you can hover your cursor in the white area underneath the text and you will see the cursor change to a hand, indicating that you can click."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1570152029057",
+      "conditions": "@quizzes",
+      "dialog_node": "response_2_1570194852858",
+      "previous_sibling": "response_7_1570194810344"
+    },
+    {
+      "type": "standard",
+      "title": "Assignments",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Assignment grades are sent via email every week or so (give or take a few days).  We send out those emails as soon as we complete grading."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1570152029057",
+      "conditions": "@assignments",
+      "dialog_node": "node_8_1573355025956",
+      "previous_sibling": "node_3_1573354962671"
+    },
+    {
+      "type": "response_condition",
+      "title": "response_4_1570194763877",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Assignment grades are sent via email every week or so (give or take a few days).  We send out those emails as soon as we complete grading."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "parent": "node_7_1570152029057",
+      "conditions": "@assignments",
+      "dialog_node": "response_4_1570194763877",
+      "previous_sibling": "node_7_1573356880178"
+    },
+    {
+      "type": "response_condition",
+      "title": "response_7_1570194810344",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Your exam grades will be emailed to you with the rest of your grades that you receive from our Grading Bot every week or so."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1570152029057",
+      "conditions": "@exams",
+      "dialog_node": "response_7_1570194810344",
+      "previous_sibling": "response_4_1570194763877"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "What grade did you want to know about?  An assignment grade, quizzes, an exam grade, or something else?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1570152029057",
+      "conditions": "true",
+      "dialog_node": "response_8_1573337637922",
+      "previous_sibling": "response_2_1570194852858"
+    },
+    {
+      "type": "standard",
+      "title": "Exam",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Your exam grades will be emailed to you with the rest of your grades that you receive from our Grading Bot every week or so."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_7_1570152029057",
+      "conditions": "@exams",
+      "dialog_node": "node_3_1573354962671"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "text": {
+          "values": [
+            "Which assignment did you want help with?"
+          ],
+          "selection_policy": "sequential"
+        }
+      },
+      "parent": "slot_3_1573422270480",
+      "event_name": "focus",
+      "dialog_node": "handler_9_1573422270491",
+      "previous_sibling": "handler_3_1573422270491"
+    },
+    {
+      "type": "event_handler",
+      "parent": "slot_3_1573422270480",
+      "context": {
+        "assignments": "@assignments"
+      },
+      "conditions": "@assignments",
+      "event_name": "input",
+      "dialog_node": "handler_3_1573422270491"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The assignment instructions and requirements are linked from the course schedule. Please take a look there first and let me know if there are specific questions you have regarding what is written."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1573421140315",
+      "conditions": "@assignments",
+      "dialog_node": "response_10_1573421253909",
+      "previous_sibling": "response_5_1573421189884"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The course schedule shows all the material covered before the exam date.  Please take a look and let me know if you have specific questions on a specific topic."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1573421140315",
+      "conditions": "@exams",
+      "dialog_node": "response_10_1573421332597",
+      "previous_sibling": "response_10_1573421253909"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Are you asking about an assignment, an exam, a quiz, lecture or something else?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1573421140315",
+      "conditions": "true",
+      "dialog_node": "response_6_1573421456167",
+      "previous_sibling": "response_2_1573421381272"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The Quizzes are linked from the course schedule.  Let me know if you have specific questions about any Quiz."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1573421140315",
+      "conditions": "@quizzes",
+      "dialog_node": "response_2_1573421381272",
+      "previous_sibling": "response_10_1573421332597"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The lecture notes are linked from the course schedule contain most of what was discussed.   Please take a look and let me know if they do not answer your question."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_4_1573421140315",
+      "conditions": "@lecture",
+      "dialog_node": "response_5_1573421189884"
+    },
+    {
+      "type": "standard",
+      "title": "Clarification",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Bot_Control_Clarification",
+      "dialog_node": "node_4_1573421140315",
+      "previous_sibling": "node_8_1573422209933"
+    },
+    {
+      "type": "standard",
+      "title": "Greetings",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi - what's up?"
+              },
+              {
+                "text": "Hi!"
+              },
+              {
+                "text": "Hello"
+              },
+              {
+                "text": "Greetings - how might I be of use?"
+              },
+              {
+                "text": "Hello!"
+              },
+              {
+                "text": "Hey"
+              },
+              {
+                "text": "How are you?"
+              },
+              {
+                "text": "How you doing?"
+              },
+              {
+                "text": "Hi.  I hope you are doing well"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#greeting",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_7_1570153149316",
+      "previous_sibling": "node_4_1573421790778"
+    },
+    {
+      "type": "standard",
+      "title": "Request email",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Grading emails are generally sent via email every week or so (give or take a few days).  We send out the complete set of emails as soon as we complete grading of any given assignment, exam, and so on.   So, if you haven't yet received an email with your latest grades, it's probably because we haven't finished grading yet."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#request_email",
+      "dialog_node": "node_9_1573421805300",
+      "previous_sibling": "node_1_1570411087202"
+    },
+    {
+      "type": "standard",
+      "title": "Apologies",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Please don't apologize."
+              },
+              {
+                "text": "Apologies are not necessary."
+              },
+              {
+                "text": "I've told you that apologies are not required."
+              },
+              {
+                "text": "Not a problem.  Carry on..."
+              },
+              {
+                "text": "No need to apologize - it's fine."
+              },
+              {
+                "text": "It's fine."
+              },
+              {
+                "text": "No problem."
+              },
+              {
+                "text": "No worries."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#apologies",
+      "dialog_node": "node_7_1570194338848",
+      "previous_sibling": "node_8_1573352241438"
+    },
+    {
+      "type": "standard",
+      "dialog_node": "node_4_1573421790778",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Farewell",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Goodbye.  It was nice speaking with you."
+              },
+              {
+                "text": "Bye!"
+              },
+              {
+                "text": "Bye bye.  We can talk more later, if you'd like."
+              },
+              {
+                "text": "Goodbye"
+              },
+              {
+                "text": "See you."
+              },
+              {
+                "text": "Ciao!"
+              },
+              {
+                "text": "Bye.  Feel free to message me with any questions."
+              },
+              {
+                "text": "Bye bye.  Nice chatting."
+              },
+              {
+                "text": "See you!"
+              },
+              {
+                "text": "Ciao"
+              },
+              {
+                "text": "Goodbye until next time."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#farewells",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_9_1570192318532",
+      "previous_sibling": "node_7_1570217895876"
+    },
+    {
+      "type": "standard",
+      "title": "Request notes",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "All my notes and slides are posted to the Schedule page on our web site... please check there for updates."
+              },
+              {
+                "text": "Please check the course schedule.  I post all class materials there as soon as they are in decent enough shape to share."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#request_notes && @notes",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_4_1570155300494",
+      "previous_sibling": "node_7_1570152029057"
+    },
+    {
+      "type": "standard",
+      "title": "Request extra credit",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "The only way to boost a grade in this course is to do well on the exams, assignments, and other course work.  There may be a few opportunities for extra credit - if so, those will be noted at that time."
+              },
+              {
+                "text": "Any extra credit opportunities will be noted in the course work descriptions."
+              },
+              {
+                "text": "There is no way to magically boost a grade... you will need to perform well on the main tasks of this course in order to receive a good grade."
+              },
+              {
+                "text": "Extra credit is almost always a gift to those students who are already doing well, and a form of punishment for those who are struggling.  For that reason, I am not in favor of it and only give it rarely.  Any opportunities will be listed in the coursework."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#request_extra_credit && @extra_credit",
+      "dialog_node": "node_1_1570411087202",
+      "previous_sibling": "node_4_1570155300494"
+    },
+    {
+      "type": "standard",
+      "title": "Request help",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Did you want to talk here, or do you prefer to speak in person?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "#request_help",
+      "dialog_node": "node_8_1573422209933",
+      "previous_sibling": "node_9_1573421805300"
+    },
+    {
+      "type": "standard",
+      "title": "Request grade",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#request_grade",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_7_1570152029057",
+      "previous_sibling": "node_7_1570153149316"
+    },
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Ok..."
+              },
+              {
+                "text": "Okay... and?"
+              },
+              {
+                "text": "What exactly?"
+              },
+              {
+                "text": "Exactly what are you asking about?"
+              },
+              {
+                "text": "What?"
+              },
+              {
+                "text": "I'm listening..."
+              },
+              {
+                "text": "Do go on..."
+              },
+              {
+                "text": "Tell me more"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "anything_else || #Bot_Control_Change_Subject",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_9_1570192318532"
+    },
+    {
+      "type": "standard",
+      "title": "Confirm approval",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Great! "
+              },
+              {
+                "text": "Awesome."
+              },
+              {
+                "text": "That's good."
+              },
+              {
+                "text": "Good good."
+              },
+              {
+                "text": "Wonderful."
+              },
+              {
+                "text": "Brilliant."
+              },
+              {
+                "text": "Fantastic."
+              },
+              {
+                "text": "Great"
+              },
+              {
+                "text": "Nice"
+              },
+              {
+                "text": "Very good."
+              },
+              {
+                "text": "Very well."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#Bot_Control_Approve_Response",
+      "dialog_node": "node_7_1570152738843",
+      "previous_sibling": "node_7_1570194338848"
+    },
+    {
+      "type": "standard",
+      "title": "Gratitude",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "You're very welcome!"
+              },
+              {
+                "text": "You're welcome."
+              },
+              {
+                "text": "You're welcome!  Thank you! "
+              },
+              {
+                "text": "Anytime!"
+              },
+              {
+                "text": "You're more than welcome."
+              },
+              {
+                "text": "It's a pleasure."
+              },
+              {
+                "text": "My pleasure."
+              },
+              {
+                "text": "It is a pleasure and an honor, as well as my job."
+              },
+              {
+                "text": "No problem!"
+              },
+              {
+                "text": "Ask me anything!"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#gratitude",
+      "digress_in": "does_not_return",
+      "dialog_node": "node_7_1570217895876",
+      "previous_sibling": "node_7_1570152738843"
+    },
+    {
+      "type": "standard",
+      "title": "Happiness",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Did I say something funny?"
+              },
+              {
+                "text": "I'm happy you find this funny!"
+              },
+              {
+                "text": "Are you laughing at me?"
+              },
+              {
+                "text": "Alright then!"
+              },
+              {
+                "text": "Ha."
+              },
+              {
+                "text": "Very funny."
+              },
+              {
+                "text": "Funny"
+              },
+              {
+                "text": "Silliness is appreciated."
+              },
+              {
+                "text": "It's ok to enjoy a little humor."
+              },
+              {
+                "text": "Thank you for laughing."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "conditions": "#lightness_of_being",
+      "dialog_node": "node_8_1573352241438",
+      "previous_sibling": "node_4_1573421140315"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hello!  What can I do for you?"
+              },
+              {
+                "text": "Hi.  What's up?"
+              },
+              {
+                "text": "Hi"
+              },
+              {
+                "text": "Yes?"
+              },
+              {
+                "text": "How may I help you?"
+              },
+              {
+                "text": "My Dear Student - what kind of assistance can I provide you?"
+              },
+              {
+                "text": "How do you do.  Please tell me your problem."
+              },
+              {
+                "text": "Please tell me what's been bothering you."
+              },
+              {
+                "text": "Is something troubling you?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "random"
+          }
+        ]
+      },
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "welcome",
+      "digress_in": "does_not_return",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "workspace_id": "a50a6acc-94f3-499f-98fe-b8fff39f52b9",
+  "counterexamples": [],
+  "system_settings": {
+    "tooling": {
+      "store_generic_responses": true
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "status": "Available"
+}
