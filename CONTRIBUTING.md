@@ -13,6 +13,7 @@ This bot requires three systems: a Slack workspace with the bot installed, a Wat
 3. Install the app in the selected workspace
 4. Locate and take note of the following app settings: Bot User OAuth Access Token, and Signing Secret - copy/paste these into the `.env` file of the Node.js app.
 5. Under `Event Subscriptions`, click to enable events and enter the url of your Node.js app's slack-related endpoint, e.g. `http://your-domain/api/slack/action-endpoint`, where your-domain is either a server where you have hosted the node.js app, or an ngrok url obtained by installing ngrok and running the command, `ngrok http 3000`, on your local machine - this sets up forwarding from an ngrok url to your local machine's IP so Slack can contact your Node.js app on your local machine, even if it is not yet hosted on a public web server.
+6. Also under `Event Subscriptions`, subscribe the bot to the following events: `app_mention` and `message.im`.s
 
 ## Google Sheets
 Coming soon.
