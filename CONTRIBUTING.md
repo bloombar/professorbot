@@ -12,7 +12,7 @@ This bot requires three systems: a Slack workspace with the bot installed, a Wat
 2. Click to create a new Slack App and select a workspace where it should install
 3. Install the app in the selected workspace
 4. Locate and take note of the following app settings: Bot User OAuth Access Token, and Signing Secret - copy/paste these into the `.env` file of the Node.js app.
-5. Under `Event Subscriptions`, click to enable events and enter the url of your Node.js app's slack-related endpoint, e.g. `http://your-domain/api/slack/action-endpoint`, where your-domain is either a server where you have hosted the node.js app, or an ngrok url obtained by installing ngrok and running the command, `ngrok http 3000`, on your local machine - this sets up forwarding from an ngrok url to your local machine's IP so Slack can contact your Node.js app on your local machine, even if it is not yet hosted on a public web server.
+5. Under `Event Subscriptions`, click to enable events and enter the url of your Node.js app's slack-related endpoint, e.g. `http://your-domain/api/slack/action-endpoint`, where your-domain is either a server where you have hosted the node.js app, or an ngrok url obtained by installing and running ngrok on your local machine (see Node.js instructions for details) - this sets up forwarding from an ngrok url to your local machine's IP so Slack can contact your Node.js app on your local machine, even if it is not yet hosted on a public web server.
 6. Also under `Event Subscriptions`, subscribe the bot to the following events: `app_mention` and `message.im`.s
 
 ## Google Sheets
@@ -22,6 +22,7 @@ Coming soon.
 1. `npm install` to install all dependencies
 2. `npm install -g nodemon`, if nodemon is desired
 3. `npm start` to start up the bot.  If using nodemon, use `nodemon npm start` instead.
+4. If developing locally, install ngrok and run the command, `ngrok http 3000`.  This would output a public domain name that can be used temporarily in the Slack app `Event Subscriptions` settings (See Slack instructions).
 
 # Code
 * Our style guide is based on [Google's](https://google.github.io/styleguide/jsguide.html), most of it is automaticaly enforced (and can be automatically applied with `npm run autofix`)
