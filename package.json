@@ -1,5 +1,5 @@
 {
-  "name": "Professorbot",
+  "name": "professorbot",
   "description": "The next best thing to the real thing.",
   "version": "0.0.1",
   "main": "server.js",
