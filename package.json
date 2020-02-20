@@ -38,7 +38,6 @@
     "casperjs": "^1.1.4",
     "eslint": "^5.2.0",
     "mocha": "^5.2.0",
-    "phantomjs-prebuilt": "^2.1.16",
     "supertest": "^3.1.0"
   },
   "engine": {
