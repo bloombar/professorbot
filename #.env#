@@ -1,0 +1,23 @@
+# Environment variables
+
+# GOOGLE SHEETS API
+GOOGLE_CLIENT_ID=852845153426-3UNKDIND4KH8V20EJU6Q12TVBMIRPT1B.APPS.GOOGLEUSERCONTENT.COM
+GOOGLE_CLIENT_SECRET=RoIZsCdWyWhv94IIPvf4SPr3
+GOOGLE_SHEET_ID=<google sheet id>
+GOOGLE_TOKEN_PATH=google-oauth-token.json
+GOOGLE_CREDENTIALS_PATH=google-api-credentials.json
+
+# SLACK OAUTH TOKEN
+SLACK_TOKEN=<slack oauth token>
+SLACK_SIGNING_SECRET=<slack signing secret>
+
+# IBM WATSON ASSISTANT
+ASSISTANT_IAM_APIKEY=<watson assistant iam api key>
+ASSISTANT_URL=<watson assistant url>
+ASSISTANT_ID=<watson assistant id>
+ASSISTANT_WORKSPACE_ID=<watson assistant workspace id>
+ASSISTANT_SESSION_TIMEOUT_SECONDS=300
+
+# IBM WATSON TONE ANALYZER
+TONE_ANALYZER_IAM_APIKEY=<watson tone analyzer iam api key>
+TONE_ANALYZER_URL=<watson tone analyzer url>
