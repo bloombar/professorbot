@@ -8,7 +8,7 @@ const { IamAuthenticator } = require('ibm-watson/auth');
  * Get an assistant object
  * @returns A watson assistant object
  */
-function getAssistant() {
+const getAssistant = () => {
   let ass = new AssistantV2({
     version: '2019-02-28',
     authenticator: new IamAuthenticator({
@@ -23,7 +23,7 @@ function getAssistant() {
  * Create a new session with the assistant
  * @param {AssistantV2} assistant An existing watson assistant object
  */
-async function createSession(userId) {
+const createSession = async (userId) => {
   console.log('creating session id');
 
   // get assistant object
@@ -31,7 +31,7 @@ async function createSession(userId) {
   let assistant = app.assistant;
 
   // get session id
-  await assistant.createSession({
+  assistant.createSession({
     assistantId: process.env.ASSISTANT_ID
   })
   .then(res => {
@@ -74,7 +74,7 @@ class WatsonSession {
     return (timeNow > this.expiration);
   }
   toString() {
-      return `(${this.userId} -> ${this.sessionId})`;
+    return `(${this.userId} -> ${this.sessionId})`;
   }
 }
 
@@ -82,7 +82,7 @@ class WatsonSession {
  * Get a response from Watson Assistant chatbot.
  * @param String message The text stimulus to which Watson Assistantwill react. 
  */
-async function getResponse(message, assistant, userId) {
+const getResponse = async (message, assistant, userId) => {
   // get session id from user id
   const app = require('./app');
   let session = app.sessions[userId]; // a WatsonSessionObject
@@ -99,68 +99,68 @@ async function getResponse(message, assistant, userId) {
   sessionId = session.sessionId;
 
   // prepare data to send to Watson
-      let payload = {
-        assistantId: process.env.ASSISTANT_ID,
-        sessionId: sessionId,
-        context: {},
-        input: {
-            'message_type': 'text',
-            "text": message
-        }
-      };
+    let payload = {
+      assistantId: process.env.ASSISTANT_ID,
+      sessionId: sessionId,
+      context: {},
+      input: {
+          'message_type': 'text',
+          "text": message
+      }
+    };
   
-      return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
 
-        // get watson's response
-        assistant.message(payload)
-          .then(res => {
-            // get the body of the response message
-            let responseBody = res.result.output; // the main body
+      // get watson's response
+      assistant.message(payload)
+        .then(res => {
+          // get the body of the response message
+          let responseBody = res.result.output; // the main body
 
-            // reject blank responses
-            if (responseBody.generic.length == 0) {
-              reject(responseBody);
-            }
+          // reject blank responses
+          if (responseBody.generic.length == 0) {
+            reject(responseBody);
+          }
 
-            // get the response text in the body
-            let responseMessage = responseBody.generic[0].text || ''; 
+          // get the response text in the body
+          let responseMessage = responseBody.generic[0].text || ''; 
 
-            // debugging
-            console.log("-- watson-helper.js message --");
-            //console.log(JSON.stringify(res, null, 2));
-            //console.log(responseBody.generic[0].text);
+          // debugging
+          console.log("-- watson-helper.js message --");
+          //console.log(JSON.stringify(res, null, 2));
+          //console.log(responseBody.generic[0].text);
 
-            // remove any undefined response messages
-            responseMessage = (responseMessage) ? responseMessage : ''; 
-    
-            // add any indicator of confusion, if confidence is low
-            let prefixes = ['Hmm... ', 'Well... ', 'Yes... ', 'Ok... ', 'Alright... '];
-            let dumbPrefix = prefixes[Math.floor(Math.random() * prefixes.length)];
-            if (responseBody.intents.length == 0 || (responseBody.intents && responseBody.intents[0].confidence <= 0.5)) {
-                responseMessage = dumbPrefix + responseMessage;
-            } // end if intent
-    
-            // do we need to get a grade from Google Sheets?
-            if (responseBody.intents.length > 0 && (responseBody.intents && responseBody.intents[0].intent == 'get_grade')) {
-              //TO DO
-              // GET GRADES FROM GOOGLE
-              // INTEGRATE GRADES INTO MESSAGE
-    
-            } // if intent is get_grade
-   
-            // sessions are renewed with each request to Watson Assistant
-            session.updateExpiration();
+          // remove any undefined response messages
+          responseMessage = (responseMessage) ? responseMessage : ''; 
+  
+          // add any indicator of confusion, if confidence is low
+          let prefixes = ['Hmm... ', 'Well... ', 'Yes... ', 'Ok... ', 'Alright... '];
+          let dumbPrefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+          if (responseBody.intents.length == 0 || (responseBody.intents && responseBody.intents[0].confidence <= 0.5)) {
+              responseMessage = dumbPrefix + responseMessage;
+          } // end if intent
+  
+          // do we need to get a grade from Google Sheets?
+          if (responseBody.intents.length > 0 && (responseBody.intents && responseBody.intents[0].intent == 'get_grade')) {
+            //TO DO
+            // GET GRADES FROM GOOGLE
+            // INTEGRATE GRADES INTO MESSAGE
+  
+          } // if intent is get_grade
+  
+          // sessions are renewed with each request to Watson Assistant
+          session.updateExpiration();
 
-            // return response
-            response = responseMessage;
-            resolve(responseMessage);
-          })
-          .catch(err => {
-              console.error(err);
-              reject(err);
-          });
+          // return response
+          response = responseMessage;
+          resolve(responseMessage);
+        })
+        .catch(err => {
+            console.error(err);
+            reject(err);
+        });
 
-      });
+    });
 
 }
 
@@ -173,7 +173,7 @@ async function getResponse(message, assistant, userId) {
  *                response The response from the Assistant service
  * @return {Object} The response with the updated message
  */
-function updateMessage(input, response) {
+const updateMessage = (input, response) => {
     var responseText = null;
     var id = null;
   
@@ -232,7 +232,7 @@ function updateMessage(input, response) {
    *                res response object
    *
    */
-  function invokeToneConversation(payload, res) {
+  const invokeToneConversation = (payload, res) => {
     toneDetection.invokeToneAsync(payload, toneAnalyzer).then(function(tone) {
       toneDetection.updateUserTone(payload, tone, maintainToneHistory);
       assistant.message(payload, function(err, data) {

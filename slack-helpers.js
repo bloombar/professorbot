@@ -6,70 +6,73 @@ const slackWebClient = new WebClient(process.env.SLACK_TOKEN);
 const { getResponse, createSession } = require('./watson-helpers');
 
 // respond to incoming slack messages
-async function respondToMessage(e) {
+const respondToMessage = async (e) => {
+  // if the incoming message is coming from this bot itself, ignore!
+  if (e.bot_profile && e.bot_profile.app_id == process.env.SLACK_APP_ID)
+    return false;
+
+  console.log( '-- incoming message received from slack --' );
+  console.log(e.text);
+  // console.log(`incoming message: ${JSON.stringify(e, null, 0)}`); // debug incoming message
+
   // extract salient details
-  const userId = e.user;
-  const channelId = e.channel;
-  const message = e.text; // the text of the message posted to slack
+  const incoming = {
+    userId: e.user,
+    channelId: e.channel,
+    message: e.text
+  }
 
-  // respond to the messages from users where userId is defined
-  // (otherwise we get a feedback loop from the bot's own messages)
-  if (userId) {
+  // load the app object to check for existing watson sessions with this user
+  const app = require('./app');
 
-    // load this user's sessionId or create new one
-    const app = require('./app');
-    if (!(userId in app.sessions)) {
-      await createSession(userId);
-    }
-    else {
-      console.log('existing session id ' + app.sessions[userId]);
-    }
+  // load this user's sessionId or create new one
+  if (!(incoming.userId in app.sessions)) {
+    await createSession(incoming.userId);
+  }
+  else {
+    console.log('existing session id ' + app.sessions[incoming.userId]);
+  }
 
-    // get Watson's response to this
-    getResponse(message, app.assistant, userId).then(response => {
-      //promise success
-      console.log("-- slack-helper.js respondToMessage --");
-      console.log(response);
-  
-      // send Watson's response back to Slack
-      if (response.trim() != '') {
-        // add the recipient's username to response
-        response = '<@' + userId + '> - ' + response
-  
-        // send watson's response to Slack conversation
-        let payload = {
-          channel: channelId,
-          text: response,
-        };
-  
-        // post message to Slack
-        const result = slackWebClient.chat.postMessage(payload).then(response => {
-          console.log( '-- posted response to slack --');
-        }, error => {
-          console.log('SLACK POSTING ERROR');
-          console.error(error);
-        });
-  
-        // debugging
-        //console.log('SLACK MESSAGE: ' + JSON.stringify(payload, null, 2));
-  
-      } //responseMessage != ''
-        
+  // get Watson's response to this
+  getResponse(incoming.message, app.assistant, incoming.userId)
+  .then(response => {
+    // ignore blank watson responsess
+    if (response.trim() == '') return;
+
+    //promise success
+    console.log( '-- response received from watson --' );
+    console.log(response);
+
+    // add the recipient's username to response
+    response = `<@${incoming.userId}> - ${response}`;
+
+    // send watson's response to Slack conversation
+    let outgoing = {
+      channel: incoming.channelId,
+      text: response,
+    };
+
+    // post message to Slack
+    const result = slackWebClient.chat.postMessage(outgoing)
+    .then(response => {
+      console.log( '-- response posted to slack --' );
+      console.log( JSON.stringify(outgoing.text, null, 2) );
     }, error => {
-      //promise rejection
-      console.log(' -- INVALID WATSON RESPONSE -- ')
-      console.error(JSON.stringify(error, null, 2));
+      console.log( '-- error posting to slack --' );
+      console.error(error);
     });
 
 
-  } // if userid
+  }, error => {
+    //promise rejection
+    console.log(' -- INVALID WATSON RESPONSE -- ')
+    console.error(JSON.stringify(error, null, 2));
+  });
 
-  // debugging
-  // console.log(`Received a message event: user ${userId} in channel ${channelId} says '${message}'.`);
 
 }; // incomingSlackMessageEvent
 
-async function scrapeUsers(req, res) {
+const scrapeUsers = async (req, res) => {
   const result = await slackWebClient.users.list();
   //console.log(JSON.stringify(result, null, 2));
 

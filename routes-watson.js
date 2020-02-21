@@ -4,7 +4,7 @@ const { getAssistant, createSession, invokeToneConversation } = require('./watso
 
 // Watson endpoint to be called from the client side
 router.post('/message', (req, res) => {
-    var workspace = process.env.WORKSPACE_ID || '<workspace-id>';
+    let workspace = process.env.WORKSPACE_ID || '<workspace-id>';
     if (!workspace || workspace === '<workspace-id>') {
       return res.json({
         'output': {
@@ -13,7 +13,7 @@ router.post('/message', (req, res) => {
       });
     }
   
-    var payload = {
+    let payload = {
       workspace_id: workspace,
       context: {},
       input: {}

@@ -41,10 +41,6 @@ app.use('/api/slack', require('./routes-slack'));
 // load Watson API routes
 app.use('/api/watson', require('./routes-watson'));
 
-// Bootstrap application settings
-//app.use(express.static('./public')); // load UI from public folder
-//app.use(bodyParser.json());
-
 // instantiate assistant instance
 app.assistant = getAssistant();
 app.sessions = {}; // associative array to hold unique session ids for each correspondent

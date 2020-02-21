@@ -3,14 +3,14 @@
 
 require('dotenv').config({silent: true});
 
-var server = require('./app');
-var port = process.env.PORT || 3000;
+const server = require('./app');
+const port = process.env.PORT || 3000;
 
-var startServer = server.listen(port, function() {
+const startServer = server.listen(port, function() {
   console.log('Server running on port: %d', port);
 });
 
-function close() {
+const close = () => {
   startServer.close();
 }
 
