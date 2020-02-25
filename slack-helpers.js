@@ -28,9 +28,10 @@ const respondToMessage = async (e) => {
   // load this user's sessionId or create new one
   if (!(incoming.userId in app.sessions)) {
     await createSession(incoming.userId);
+    console.log( `-- new watson session #${app.sessions[incoming.userId]} created --` );
   }
   else {
-    console.log('existing session id ' + app.sessions[incoming.userId]);
+    console.log( `-- existing watson session #${app.sessions[incoming.userId]} used --` );
   }
 
   // get Watson's response to this

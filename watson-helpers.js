@@ -31,7 +31,7 @@ const createSession = async (userId) => {
   let assistant = app.assistant;
 
   // get session id
-  assistant.createSession({
+  await assistant.createSession({
     assistantId: process.env.ASSISTANT_ID
   })
   .then(res => {
