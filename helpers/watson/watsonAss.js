@@ -24,7 +24,7 @@ function WatsonAss({ config }) {
    */
   this.sessionExists = (sessionKey) => {
     // is there an existing session for this user and if so, is this session valid?
-    console.log(`-- checking whether session exists for user #${sessionKey} --`)
+    // console.log(`-- checking whether session exists for user #${sessionKey} --`)
     const sessionExists = (sessionKey in this.sessions);
     if (sessionExists) {
       // console.log(`-- watson session for user #${sessionKey} exists --`)
@@ -93,12 +93,12 @@ function WatsonAss({ config }) {
       return session;
     })
     .catch(err => {
-      console.log('-- error creating watson session --');
+      // console.log('-- error creating watson session --');
       throw err;
     });
   }
 
-  this.preparePayload = async (message, sessionId, context={} ) => {
+  this.preparePayload = (message, sessionId, context={} ) => {
 
     // assemble the payload to send to Watson
     const payload = {
@@ -110,7 +110,7 @@ function WatsonAss({ config }) {
           "text": message
       }
     }
-    console.log(payload);
+    // console.log(payload);
     return payload;
   }
 
@@ -123,10 +123,10 @@ function WatsonAss({ config }) {
     const session = await this.getSession(sessionKey);
 
     // prepare data to send to Watson
-    let payload = await this.preparePayload(message, session.sessionId, context);
+    let payload = this.preparePayload(message, session.sessionId, context);
 
-    console.log(' -- preparing payload to watson -- ');
-    console.log(payload);
+    // console.log(' -- preparing payload to watson -- ');
+    // console.log(payload);
 
     // get watson's response
     return this.assistant.message(payload)
@@ -135,6 +135,7 @@ function WatsonAss({ config }) {
         session.updateExpiration();
 
         // now clean up the response text
+        console.log(`--watson response --\n${JSON.stringify(res.result, null, 2)}`);
 
         // get the body of the response message
         let responseBody = res.result.output; // the main body
@@ -170,8 +171,8 @@ function WatsonAss({ config }) {
         return responseMessage;
       })
       .catch(err => {
-        console.log(`-- watson response error --`);
-        console.error(err);
+        // console.log(`-- watson response error --`);
+        // console.error(err);
         throw err
       });
 
@@ -203,7 +204,7 @@ class WatsonSession {
   expired() {
     const timeNow = Math.floor(Date.now() / 1000);
     const expired = (timeNow > this.expiration);
-    if (expired) console.log(' -- existing watson session has expired -- ');
+    // if (expired) console.log(' -- existing watson session has expired -- ');
     return expired;
   }
   toString() {

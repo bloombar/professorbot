@@ -11,18 +11,29 @@ function SlackAss({ config, assistant }) {
   /**
    * Determine whether a given slack event is a result of this bot posting a message
    */
-  this.isMyEvent = (e) => {
+  this.isFromMe = (e) => {
     // if the incoming message is coming from this bot itself, ignore!
-    if (e.bot_profile && e.bot_profile.app_id == this.config.appId)
-      return true;
+    // console.log(`bot_profile: ${e.bot_profile}`);
+    const fromMe = (e.bot_profile && e.bot_profile.app_id == this.config.appId);
+    return fromMe;
+  }
+
+  /**
+   * Determine whether a message is directed to the bot
+   */
+  this.isToMe = (e) => {
+    // if it's a direct message to the bot OR a mention of the bot in a channel...
+    // console.log(`channel type: ${e.channel_type}, type: ${e.type}`);
+    let toMe = (e.channel_type == 'im' || e.type == 'app_mention') ? true : false;
+    return toMe;
   }
 
   // respond to incoming slack messages
   this.respondToMessage = async (e) => {
-    // ignore any messages coming from this bot itself
-    if (this.isMyEvent(e)) return false;
+    // ignore any messages coming from this bot itself or not directed to the bot
+    if (this.isFromMe(e) || !this.isToMe(e)) return false;
 
-    console.log( '-- incoming message received from slack --' );
+    // console.log( '-- incoming message received from slack --' );
     // console.log(e.text);
     // console.log(`incoming message: ${JSON.stringify(e, null, 0)}`); // debug incoming message
 
@@ -40,8 +51,8 @@ function SlackAss({ config, assistant }) {
       if (response.trim() == '') return;
 
       //promise success
-      console.log( '-- response received from watson --' );
-      console.log(response);
+      // console.log( '-- response received from watson --' );
+      // console.log(response);
 
       // add the recipient's username to response
       response = `<@${incoming.userId}> - ${response}`;
@@ -53,20 +64,22 @@ function SlackAss({ config, assistant }) {
       };
 
       // post message to Slack
-      const result = slackWebClient.chat.postMessage(outgoing)
+      return slackWebClient.chat.postMessage(outgoing)
       .then(response => {
-        console.log( '-- response posted to slack --' );
-        console.log( JSON.stringify(outgoing.text, null, 2) );
+        // console.log( '-- response posted to slack --' );
+        // console.log( JSON.stringify(outgoing.text, null, 2) );
+        return response;
       }, err => {
-        console.log( '-- error posting to slack --' );
-        console.error(err);
+        // console.log( '-- error posting to slack --' );
+        // console.error(err);
+        throw err;
       });
-
 
     }, err => {
       //promise rejection
-      console.log(' -- INVALID WATSON RESPONSE -- ')
-      console.error(JSON.stringify(err, null, 2));
+      // console.log(' -- INVALID WATSON RESPONSE -- ')
+      // console.error(JSON.stringify(err, null, 2));
+      throw err;
     });
 
 
