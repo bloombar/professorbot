@@ -8,6 +8,10 @@ function SlackAss({ config, assistant }) {
   this.config = config;
   this.assistant = assistant;
 
+
+  // threads this bot has taken part in
+  this.threads = []; 
+
   /**
    * Determine whether a given slack event is a result of this bot posting a message
    */
@@ -22,10 +26,24 @@ function SlackAss({ config, assistant }) {
    * Determine whether a message is directed to the bot
    */
   this.isToMe = (e) => {
-    // if it's a direct message to the bot OR a mention of the bot in a channel...
+    // the message directed to the bot if it is a DM, mentions the bot, or is in a thread the bot is a part of
     // console.log(`channel type: ${e.channel_type}, type: ${e.type}`);
-    let toMe = (e.channel_type == 'im' || e.type == 'app_mention') ? true : false;
+    let toMe = ( this.isDM(e) || e.type == 'app_mention' || this.isThread(e) ) ? true : false;
     return toMe;
+  }
+
+  /**
+   * Determine whether this event is within a direct message to the bot.
+   */
+  this.isDM = (e) => {
+    return (e.channel_type == 'im');
+  }
+
+  /**
+   * Determine whether this event is within a thread
+   */
+  this.isThread = (e) => {
+    return (e.thread_ts && (this.threads.indexOf(e.thread_ts) >= 0) );
   }
 
   // respond to incoming slack messages
@@ -33,15 +51,15 @@ function SlackAss({ config, assistant }) {
     // ignore any messages coming from this bot itself or not directed to the bot
     if (this.isFromMe(e) || !this.isToMe(e)) return false;
 
-    // console.log( '-- incoming message received from slack --' );
-    // console.log(e.text);
-    // console.log(`incoming message: ${JSON.stringify(e, null, 0)}`); // debug incoming message
+    // console.log( '-- slack event --' );
+    // console.log(JSON.stringify(e, null, 2));
 
     // extract salient details
     const incoming = {
       userId: e.user,
       channelId: e.channel,
-      message: e.text
+      message: e.text,
+      threadId: e.thread_ts || e.ts // use an existing thread if present
     }
 
     // get Watson's response to this
@@ -54,14 +72,22 @@ function SlackAss({ config, assistant }) {
       // console.log( '-- response received from watson --' );
       // console.log(response);
 
-      // add the recipient's username to response
-      response = `<@${incoming.userId}> - ${response}`;
+      // add the recipient's username to response if not in a direct message or thread
+      response = (this.isDM(e) || this.isThread(e) ) ? response : `<@${incoming.userId}> - ${response}`;
 
       // send watson's response to Slack conversation
       let outgoing = {
         channel: incoming.channelId,
         text: response,
+        thread_ts: this.isDM(e) ? null : incoming.threadId // don't use threads in direct messages
       };
+
+      // if posting to a thread, add the threadId to the list
+      if (outgoing.thread_ts) {
+        this.threads.push(outgoing.thread_ts);
+        console.log(`storing thread #${outgoing.thread_ts} in ${this.threads}`);
+        console.log(`${e.thread_ts} in list: ${(outgoing.thread_ts in this.threads)}`)
+      }
 
       // post message to Slack
       return slackWebClient.chat.postMessage(outgoing)
