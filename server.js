@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
-require('dotenv').config({silent: true});
-
-const server = require('./app');
+const config = require('./config/global');
+const server = require('./app')(config); // pass the config settings to the app function
 const port = process.env.PORT || 3000;
 
 const startServer = server.listen(port, function() {
