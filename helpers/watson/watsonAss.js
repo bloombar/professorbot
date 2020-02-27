@@ -99,6 +99,9 @@ function WatsonAss({ config }) {
   }
 
   this.preparePayload = (message, sessionId, context={} ) => {
+    // message cannot contain line breaks or tabs... replace with spaces.
+    message = message.replace(/\t/gm, ' '); // replace tabs with space
+    message = message.replace(/(\r\n|\n|\r)/gm, '.'); // replace line break with period
 
     // assemble the payload to send to Watson
     const payload = {
@@ -122,6 +125,9 @@ function WatsonAss({ config }) {
     // get a valid session object
     const session = await this.getSession(sessionKey);
 
+    // if a context argument was passed, use that, otherwise use the session's stored context
+    context = context || session.context;
+
     // prepare data to send to Watson
     let payload = this.preparePayload(message, session.sessionId, context);
 
@@ -139,6 +145,10 @@ function WatsonAss({ config }) {
 
         // get the body of the response message
         let responseBody = res.result.output; // the main body
+
+        // store context sent from Watson, if any, in session
+        let context = res.context || responseBody.context; // NEED TO VERIFY THIS IS CORRECT!!
+        session.updateContext(context);
 
         // reject blank responses
         if (! (responseBody.generic.length && responseBody.generic[0].text) ) {
@@ -188,9 +198,10 @@ function WatsonAss({ config }) {
  * and up to 60 minutes for Plus and Premium Pklans
  */
 class WatsonSession {
-  constructor(userId, sessionId) {
+  constructor(userId, sessionId, context={}) {
     this.userId = userId;
     this.sessionId = sessionId;
+    this.context = context;
     this.updateExpiration();
   }
   updateExpiration() {
@@ -206,6 +217,10 @@ class WatsonSession {
     const expired = (timeNow > this.expiration);
     // if (expired) console.log(' -- existing watson session has expired -- ');
     return expired;
+  }
+  updateContext(context) {
+    // if new context is given, store it... otherwise, ignore and keep old
+    this.context = (context) ? context : this.context;
   }
   toString() {
     return `(${this.userId} -> ${this.sessionId})`;

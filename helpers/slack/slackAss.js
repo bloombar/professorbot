@@ -63,7 +63,7 @@ function SlackAss({ config, assistant }) {
     }
 
     // get Watson's response to this
-    this.assistant.getResponse(incoming.message, incoming.userId, null)
+    this.assistant.getResponse(incoming.message, incoming.userId)
     .then(response => {
       // ignore blank watson responsess
       if (response.trim() == '') return;
@@ -85,8 +85,8 @@ function SlackAss({ config, assistant }) {
       // if posting to a thread, add the threadId to the list
       if (outgoing.thread_ts) {
         this.threads.push(outgoing.thread_ts);
-        console.log(`storing thread #${outgoing.thread_ts} in ${this.threads}`);
-        console.log(`${e.thread_ts} in list: ${(outgoing.thread_ts in this.threads)}`)
+        // console.log(`storing thread #${outgoing.thread_ts} in ${this.threads}`);
+        // console.log(`${e.thread_ts} in list: ${(outgoing.thread_ts in this.threads)}`)
       }
 
       // post message to Slack
