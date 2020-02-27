@@ -82,7 +82,7 @@ function WatsonAss({ config }) {
     .then(res => {
       // console.log(JSON.stringify(res, null, 2));
       let sessionId = res.result.session_id;
-      let session = new WatsonSession(sessionKey, sessionId);
+      let session = new WatsonSession(sessionKey, sessionId, this.config.sessionTimeoutSeconds);
 
       // console.log(`-- created new watson session #${sessionId} for user # ${sessionKey}--`);
       // console.log(session);
@@ -198,7 +198,7 @@ function WatsonAss({ config }) {
  * and up to 60 minutes for Plus and Premium Pklans
  */
 class WatsonSession {
-  constructor(userId, sessionId, context={}) {
+  constructor(userId, sessionId, sessionTimeoutSeconds, context={}) {
     this.userId = userId;
     this.sessionId = sessionId;
     this.context = context;
@@ -206,7 +206,7 @@ class WatsonSession {
   }
   updateExpiration() {
     // set the expiration date to the current time plus watson's timeout period after inactivity
-    this.expiration = Math.floor(Date.now() / 1000) + parseInt(process.env.ASSISTANT_SESSION_TIMEOUT_SECONDS); // 5 minutes in the future
+    this.expiration = Math.floor(Date.now() / 1000) + parseInt(sessionTimeoutSeconds); // 5 minutes in the future
     // console.log('-- extending watson session --');
     // console.log('new expiration: ' + this.expiration);
     // console.log('time now: ' + Math.floor(Date.now() / 1000));
