@@ -3,8 +3,8 @@
 const express = require('express'); // app server
 
 // load routes
-const slackRouter = require('./routes/slackRoutes');
-const watsonRouter = require('./routes/watsonRoutes');
+const slackRouter = require('./routes/slackRouter');
+const watsonRouter = require('./routes/watsonRouter');
 
 // IBM Watson integration
 const { WatsonAss } = require('./helpers/watson/watsonAss');

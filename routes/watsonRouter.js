@@ -1,8 +1,10 @@
 const express = require('express');
-const router = express.Router();
 const bodyParser = require('body-parser'); // parser for post requests
 
 const watsonRouter = (args) => {
+  // create an express router
+  const router = express.Router();
+
   const { config, assistant } = args; // extract the config data and assistant object from the params
 
   // pre-process HTTP POST data

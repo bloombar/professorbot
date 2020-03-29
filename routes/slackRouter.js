@@ -1,11 +1,13 @@
 const express = require('express');
-const router = express.Router();
 
 // connect to slack events api
 const { createEventAdapter } = require('@slack/events-api');
 const { SlackAss } = require('../helpers/slack/slackAss');
 
 const slackRouter = ({ config, assistant }) => {
+
+    // create an express router
+    const router = express.Router();
 
     // create a helper object
     const slackAss = new SlackAss({ config, assistant });
