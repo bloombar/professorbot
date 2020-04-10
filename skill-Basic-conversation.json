@@ -915,11 +915,7 @@
         {
           "type": "synonyms",
           "value": "Tutor",
-          "synonyms": [
-            "TA",
-            "Teaching Assistant",
-            "T/A"
-          ]
+          "synonyms": ["TA", "Teaching Assistant", "T/A"]
         }
       ],
       "fuzzy_match": true
@@ -940,27 +936,17 @@
         {
           "type": "synonyms",
           "value": "Most recent",
-          "synonyms": [
-            "latest",
-            "the last"
-          ]
+          "synonyms": ["latest", "the last"]
         },
         {
           "type": "synonyms",
           "value": "Next",
-          "synonyms": [
-            "upcoming",
-            "the next",
-            "the one after this one"
-          ]
+          "synonyms": ["upcoming", "the next", "the one after this one"]
         },
         {
           "type": "synonyms",
           "value": "Assignment",
-          "synonyms": [
-            "Homework",
-            "Home work"
-          ]
+          "synonyms": ["Homework", "Home work"]
         }
       ],
       "fuzzy_match": true
@@ -976,12 +962,7 @@
         {
           "type": "synonyms",
           "value": "Quiz",
-          "synonyms": [
-            "quizzes",
-            "qiz",
-            "quizes",
-            "questionnaire"
-          ]
+          "synonyms": ["quizzes", "qiz", "quizes", "questionnaire"]
         }
       ],
       "fuzzy_match": true
@@ -992,10 +973,7 @@
         {
           "type": "synonyms",
           "value": "Lecture",
-          "synonyms": [
-            "Class",
-            "Session"
-          ]
+          "synonyms": ["Class", "Session"]
         }
       ],
       "fuzzy_match": true
@@ -1022,11 +1000,7 @@
         {
           "type": "synonyms",
           "value": "Daily standups",
-          "synonyms": [
-            "Daily scrum",
-            "Daily meetings",
-            "Team meetings"
-          ]
+          "synonyms": ["Daily scrum", "Daily meetings", "Team meetings"]
         }
       ],
       "fuzzy_match": true
@@ -1121,19 +1095,12 @@
         {
           "type": "synonyms",
           "value": "Notes",
-          "synonyms": [
-            "documents"
-          ]
+          "synonyms": ["documents"]
         },
         {
           "type": "synonyms",
           "value": "Slides",
-          "synonyms": [
-            "slide",
-            "presentation",
-            "keynote",
-            "powerpoint"
-          ]
+          "synonyms": ["slide", "presentation", "keynote", "powerpoint"]
         }
       ],
       "fuzzy_match": true
@@ -1144,12 +1111,7 @@
         {
           "type": "synonyms",
           "value": "Professor",
-          "synonyms": [
-            "Amos",
-            "Bloomberg",
-            "Prof",
-            "Instructor"
-          ]
+          "synonyms": ["Amos", "Bloomberg", "Prof", "Instructor"]
         }
       ],
       "fuzzy_match": true
@@ -1180,9 +1142,7 @@
         {
           "type": "synonyms",
           "value": "Grader",
-          "synonyms": [
-            "Grader"
-          ]
+          "synonyms": ["Grader"]
         }
       ],
       "fuzzy_match": true
@@ -1244,12 +1204,7 @@
         {
           "type": "synonyms",
           "value": "Exam",
-          "synonyms": [
-            "Exam",
-            "Test",
-            "the exam",
-            "midterm"
-          ]
+          "synonyms": ["Exam", "Test", "the exam", "midterm"]
         }
       ],
       "fuzzy_match": true
@@ -1483,9 +1438,7 @@
       "type": "event_handler",
       "output": {
         "text": {
-          "values": [
-            "Which assignment did you want help with?"
-          ],
+          "values": ["Which assignment did you want help with?"],
           "selection_policy": "sequential"
         }
       },

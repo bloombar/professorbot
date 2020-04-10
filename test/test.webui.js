@@ -14,78 +14,88 @@
  * the License.
  */
 
-'use strict';
+'use strict'
 
-casper.options.waitTimeout = 360000;
+casper.options.waitTimeout = 360000
 
-casper.start();
+casper.start()
 
-casper
-  .thenOpen(
-    'http://localhost:3000',
-    function (result) {
-      this.echo(result.status);
-      casper.test.assert(result.status === 200, 'Front page opens');
+casper.thenOpen(
+  'http://localhost:3000',
+  function (result) {
+    this.echo(result.status)
+    casper.test.assert(result.status === 200, 'Front page opens')
 
-      casper.then(function () {
-        casper.waitForSelector('#scrollingChat > div:nth-child(1)',
-          function () {});
-      });
+    casper.then(function () {
+      casper.waitForSelector(
+        '#scrollingChat > div:nth-child(1)',
+        function () {}
+      )
+    })
 
-      // Assert - Initial Dialog message
-      casper.then(function () {
-        var text = this.evaluate(function () {
-          return document.querySelector('p').textContent;
-        });
+    // Assert - Initial Dialog message
+    casper.then(function () {
+      var text = this.evaluate(function () {
+        return document.querySelector('p').textContent
+      })
 
-        casper.test.assertMatch(text, /^Hi,  I see you purchased a new laptop two weeks ago*/i);
+      casper.test.assertMatch(
+        text,
+        /^Hi,  I see you purchased a new laptop two weeks ago*/i
+      )
 
-        casper.sendKeys('#textInput', 'Good');
-        this.sendKeys('#textInput', casper.page.event.key.Enter, {
-          keepFocus: true
-        });
-      });
+      casper.sendKeys('#textInput', 'Good')
+      this.sendKeys('#textInput', casper.page.event.key.Enter, {
+        keepFocus: true,
+      })
+    })
 
-      // Process response
-      casper.then(function () {
-        casper.waitForSelector('#scrollingChat > div:nth-child(3)',
-          function () {});
-      });
+    // Process response
+    casper.then(function () {
+      casper.waitForSelector(
+        '#scrollingChat > div:nth-child(3)',
+        function () {}
+      )
+    })
 
-      casper
-        .then(function () {
-          var text2 = this
-            .evaluate(function () {
-              return document
-                .querySelector('#scrollingChat > div:nth-child(3) > div > div > p').textContent;
-            });
+    casper.then(function () {
+      var text2 = this.evaluate(function () {
+        return document.querySelector(
+          '#scrollingChat > div:nth-child(3) > div > div > p'
+        ).textContent
+      })
 
-          casper.test.assertMatch(text2, /^.*Got it. Is anything not meeting your expectations.*/i);
+      casper.test.assertMatch(
+        text2,
+        /^.*Got it. Is anything not meeting your expectations.*/i
+      )
 
-          casper.sendKeys('#textInput', 'No');
-          this.sendKeys('#textInput', casper.page.event.key.Enter, {
-            keepFocus: true
-          });
-        });
+      casper.sendKeys('#textInput', 'No')
+      this.sendKeys('#textInput', casper.page.event.key.Enter, {
+        keepFocus: true,
+      })
+    })
 
-      // Process response
-      casper.then(function () {
-        casper.waitForSelector('#scrollingChat > div:nth-child(5)');
-      });
+    // Process response
+    casper.then(function () {
+      casper.waitForSelector('#scrollingChat > div:nth-child(5)')
+    })
 
-      // Check for Response
-      casper
-        .then(function () {
-          var text3 = this
-            .evaluate(function () {
-              return document
-                .querySelector('#scrollingChat > div:nth-child(5) > div > div > p').textContent;
-            });
+    // Check for Response
+    casper.then(function () {
+      var text3 = this.evaluate(function () {
+        return document.querySelector(
+          '#scrollingChat > div:nth-child(5) > div > div > p'
+        ).textContent
+      })
 
-          casper.test.assertMatch(text3, /^Great to hear*/i);
-        });
-    }, null, 6 * 60 * 1000);
+      casper.test.assertMatch(text3, /^Great to hear*/i)
+    })
+  },
+  null,
+  6 * 60 * 1000
+)
 
 casper.run(function () {
-  this.test.done();
-});
+  this.test.done()
+})

@@ -14,21 +14,21 @@
  * the License.
  */
 
-'use strict';
+'use strict'
 
 if (!process.env.CLOUDANT_URL) {
-  console.log('Skipping unit test because CLOUDANT_URL is null');
-  return;
+  console.log('Skipping unit test because CLOUDANT_URL is null')
+  return
 }
 
-var app = require('../../app');
-var bodyParser = require('body-parser');
-var request = require('supertest');
+var app = require('../../app')
+var bodyParser = require('body-parser')
+var request = require('supertest')
 
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 
-describe('Basic API tests', function() {
-  it('GET to / should load the home page', function(done) {
-    request(app).get('/').expect(200, done);
-  });
-});
+describe('Basic API tests', function () {
+  it('GET to / should load the home page', function (done) {
+    request(app).get('/').expect(200, done)
+  })
+})
