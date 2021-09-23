@@ -28,10 +28,10 @@
     "express": "^4.16.3",
     "googleapis": "^39.2.0",
     "ibm-watson": "^5.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "nano": "^6.4.4",
     "uuid": "^3.3.2",
-    "vcap_services": "^0.4.0",
+    "vcap_services": "^0.7.1",
     "watson-developer-cloud": "^3.7.0"
   },
   "devDependencies": {
