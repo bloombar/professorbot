@@ -2,11 +2,11 @@
 
 An 'intelligent' chat bot that helps with common student questions and issues:
 
-- responding to mundane questions about exams, assignments, and other course work
-- pulling grades out of a Google Sheet on request
-- advising students on how to study
-- responding to demands for extra credit or other leniency
-- encouraging students to visit the professor or tutors during open office hours
+- **responding to mundane questions** about exams, assignments, and other course work
+- **pulling grades** out of a Google Sheet on request
+- **advising students** on how to study
+- **responding to demands** for extra credit or other leniency
+- **encouraging students** to visit the professor or tutors during open office hours
 
 ## Integrations
 
