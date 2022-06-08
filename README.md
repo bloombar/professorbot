@@ -14,11 +14,6 @@ An 'intelligent' chat bot that helps with common student questions and issues:
 - grades and other course material are stored in a [Google Sheet](https://www.google.com/sheets/about)
 - machine learning / artificial intelligence handled by [IBM Watson Assistant](https://www.ibm.com/products/watson-assistant)
 
-## Attribution
-
-- Code used to interact with IBM Watson is based on [tone analyzer code example code](https://github.com/watson-developer-cloud/node-sdk/tree/master/examples/assistant_tone_analyzer_integration) from IBM Watson, licensed under the Apache 2.0 License.
-- Code used to integrate with Google Sheets is somewhat based on [node.js quickstart code](https://developers.google.com/sheets/api/quickstart/nodejs), by Google, licensed under the Apache 2.0 License.
-
 ## License
 
 The full license for this project is available in [LICENSE](LICENSE).
