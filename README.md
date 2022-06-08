@@ -1,3 +1,5 @@
+# Professorbot
+
 An 'intelligent' chat bot that helps with common student questions and issues:
 
 - responding to mundane questions about exams, assignments, and other course work
@@ -8,9 +10,9 @@ An 'intelligent' chat bot that helps with common student questions and issues:
 
 ## Integrations
 
-- chat bot operates in a Slack workspace
-- grades and other course material are stored in a Google Sheet
-- machine learning / artificial intelligence handled by IBM Watson Assistant
+- chat bot operates in a [Slack](https://slack.com) workspace
+- grades and other course material are stored in a [Google Sheet](https://www.google.com/sheets/about)
+- machine learning / artificial intelligence handled by [IBM Watson Assistant](https://www.ibm.com/products/watson-assistant)
 
 ## Attribution
 
